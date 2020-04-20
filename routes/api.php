@@ -12,18 +12,9 @@ Route::group(['prefix' => '/editions'], function () {
         );
     });
 
-    Route::post('/{id}', function (Request $request, $id) {
-        return app(ArticlesRepository::class)->updateEdition(
-            $id,
-            $request->all()
-        );
-    });
+    Route::post('/', 'Admin\Articles@store')->name('articles.store');
 
-    Route::post('/', function (Request $request) {
-        return app(ArticlesRepository::class)->createNewEdition(
-            $request->all()
-        );
-    });
+    Route::post('/{id}', 'Admin\Articles@update')->name('articles.update');
 
     Route::get('/{id}/publish', function ($edition_id) {
         return app(ArticlesRepository::class)->publishEdition(
