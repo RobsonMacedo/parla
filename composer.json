@@ -12,7 +12,7 @@
         "jenssegers/date": "^3.2",
         "laravel/framework": "5.6.*",
         "laravel/tinker": "~1.0",
-        "league/commonmark": "^0.17.0",
+        "league/commonmark": "^1.4",
         "mccool/laravel-auto-presenter": "^7.0",
         "owen-it/laravel-auditing": "^7.0",
         "pragmarx/coollection": "^0.5.2",
@@ -20,7 +20,7 @@
         "pragmarx/yaml": "^0.1.6",
         "spatie/laravel-backup": "^5.10",
         "spatie/laravel-tags": "^2.0",
-        "webuni/commonmark-attributes-extension": "dev-master"
+        "webuni/commonmark-attributes-extension": "^1.0"
     },
     "require-dev": {
         "brainmaestro/composer-git-hooks": "^2.4",
