@@ -16,7 +16,7 @@ class Articles extends Controller
         );
     }
 
-    public function store(EditionStore $request, $id)
+    public function store(EditionStore $request)
     {
         return app(ArticlesRepository::class)->createNewEdition(
             $request->all()
