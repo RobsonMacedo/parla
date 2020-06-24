@@ -12,22 +12,24 @@ Route::group(['prefix' => '/editions'], function () {
         );
     });
 
-    Route::post('/', 'Admin\Articles@store')->name('articles.store');
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('/', 'Admin\Articles@store')->name('articles.store');
 
-    Route::post('/{id}', 'Admin\Articles@update')->name('articles.update');
+        Route::post('/{id}', 'Admin\Articles@update')->name('articles.update');
 
-    Route::get('/{id}/publish', function ($edition_id) {
-        return app(ArticlesRepository::class)->publishEdition(
-            $edition_id,
-            true
-        );
-    });
+        Route::get('/{id}/publish', function ($edition_id) {
+            return app(ArticlesRepository::class)->publishEdition(
+                $edition_id,
+                true
+            );
+        });
 
-    Route::get('/{id}/unpublish', function ($edition_id) {
-        return app(ArticlesRepository::class)->publishEdition(
-            $edition_id,
-            false
-        );
+        Route::get('/{id}/unpublish', function ($edition_id) {
+            return app(ArticlesRepository::class)->publishEdition(
+                $edition_id,
+                false
+            );
+        });
     });
 });
 
@@ -48,12 +50,14 @@ Route::group(['prefix' => '/posts/{edition_id}'], function () {
         return app(ArticlesRepository::class)->all($edition_id, false);
     });
 
-    Route::get('/{id}/publish', function ($edition_id, $article_id) {
-        return app(ArticlesRepository::class)->publish($article_id, true);
-    });
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::get('/{id}/publish', function ($edition_id, $article_id) {
+            return app(ArticlesRepository::class)->publish($article_id, true);
+        });
 
-    Route::get('/{id}/unpublish', function ($edition_id, $article_id) {
-        return app(ArticlesRepository::class)->publish($article_id, false);
+        Route::get('/{id}/unpublish', function ($edition_id, $article_id) {
+            return app(ArticlesRepository::class)->publish($article_id, false);
+        });
     });
 });
 

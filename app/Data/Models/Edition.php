@@ -4,7 +4,7 @@ namespace App\Data\Models;
 use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Date\Date;
 
-class Edition extends Model
+class Edition extends BaseModel
 {
     protected $fillable = ['year', 'month', 'number', 'published_at'];
 
@@ -17,8 +17,8 @@ class Edition extends Model
 
     public function getMonthNameAttribute()
     {
-        return Date
-            ::parse(sprintf('%s-%s-%s', $this->year, $this->month, 1))
-            ->format('F');
+        return Date::parse(
+            sprintf('%s-%s-%s', $this->year, $this->month, 1)
+        )->format('F');
     }
 }
