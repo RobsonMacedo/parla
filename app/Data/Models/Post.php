@@ -5,7 +5,7 @@ use App\Services\Markdown\Service;
 use Jenssegers\Date\Date as Carbon;
 use PragmaRX\Coollection\Package\Coollection;
 
-class Post
+class Post extends BaseModel
 {
     protected static $posts = [
         [
@@ -56,8 +56,7 @@ class Post
             ],
             'lead' =>
                 'Entre os dias 9 e 13 de fevereiro, o Rio de Janeiro será tomado por plumas, paetês e muito samba no pé. Para muitos funcionários da Assembleia Legislativa do Estado do Rio de Janeiro (Alerj) esta é a época do ano mais esperada. É o momento de vestir a fantasia e defender na Marques de Sapucaí as cores das suas escolas de samba do coração.',
-            'body' =>
-                'Este é o caso da auxiliar de serviços gerais, Daiza Maria da Conceição, de 60 anos. Moradora  de Manguinhos, na Zona Norte da cidade, Daiza  marca presença na quadra da Estação Primeira de  Mangueira e nos desfiles da escola na Sapucaí desde criança.  "Já desfilo há tanto tempo que nem lembro há quantos anos saio pela minha escola do coração",  admite Daiza, que há 26 anos trabalha nas dependências do Palácio Tiradentes e no prédio anexo da Alerj. Todas as quintas-feiras e domingos Daiza não abre mão do ensaio no Palácio do Samba, quadra da Mangueira, para no domingo de Carnaval se somar à Ala da Comunidade da escola e  fazer "bonito na avenida".
+            'body' => 'Este é o caso da auxiliar de serviços gerais, Daiza Maria da Conceição, de 60 anos. Moradora  de Manguinhos, na Zona Norte da cidade, Daiza  marca presença na quadra da Estação Primeira de  Mangueira e nos desfiles da escola na Sapucaí desde criança.  "Já desfilo há tanto tempo que nem lembro há quantos anos saio pela minha escola do coração",  admite Daiza, que há 26 anos trabalha nas dependências do Palácio Tiradentes e no prédio anexo da Alerj. Todas as quintas-feiras e domingos Daiza não abre mão do ensaio no Palácio do Samba, quadra da Mangueira, para no domingo de Carnaval se somar à Ala da Comunidade da escola e  fazer "bonito na avenida".
 
 Outro apaixonado por samba é Gabriel Eleno da Conceição,  mais conhecido como Gabriel Sorriso. Operador e editor de áudio na Alerj, Sorriso dedica todo o seu tempo livre à composição de sambas. No ano passado, Sorriso teve duas alegrias: foi campeão na escolha do samba enredo da Acadêmicos do Engenho da Rainha (grupo B) e da Acadêmicos de Madureira (grupo D). "Sempre estive envolvido com a música, especialmente com o samba carioca e sua tradição. É uma paixão antiga. Participei de outras escolhas de samba-enredo, mas 2018 me deu alegria em dobro", disse ele.
 
@@ -93,8 +92,7 @@ Em 1992, Antônio Nick, como é conhecido, passou a interpretar sambas e só na 
             ],
             'lead' =>
                 'Fevereiro chegou e com ele os dias de folia. Fantasias prontas, agenda de blocos conferida e marchinhas na ponta da língua são primordiais para quem curte o  Carnaval no Rio de Janeiro, que esse ano será do dia 9 a 13 de fevereiro. Mas no auge do verão carioca, muitos esquecem de cuidar da saúde antes de aproveitar a festa de Momo. A Riotur informou que espera seis milhões de foliões no Rio, 400 mil turistas a mais que em 2017.',
-            'body' =>
-                'Com o calor e tantas pessoas na rua, algumas doenças se proliferam com mais facilidade. Mononucleose, herpes e insolação são alguns casos frequentes registrados nesta época do ano. Para evitar que doenças estraguem a festa, a diretora do departamento médico da Alerj, Mônica Antun Maia, dá algumas dicas para os funcionários da Casa curtirem com tranquilidade:
+            'body' => 'Com o calor e tantas pessoas na rua, algumas doenças se proliferam com mais facilidade. Mononucleose, herpes e insolação são alguns casos frequentes registrados nesta época do ano. Para evitar que doenças estraguem a festa, a diretora do departamento médico da Alerj, Mônica Antun Maia, dá algumas dicas para os funcionários da Casa curtirem com tranquilidade:
 
 - Protetor solar: é fundamental passar o protetor antes de sair de casa e reaplicá-lo ao longo do dia, mesmo com o céu nublado. A radiação ultravioleta pode causar danos como, manchas, queimaduras e envelhecimento precoce.  
 
@@ -111,7 +109,7 @@ nos dias de festa. Procure um posto e garanta a sua.
             'tags' => ['saúde', 'carnaval']
         ],
         [
-            'title' => "Cultura africana no Centro do Rio",
+            'title' => 'Cultura africana no Centro do Rio',
             'order' => 3,
             'published' => true,
             'category' => 'Cultura',
@@ -153,8 +151,7 @@ nos dias de festa. Procure um posto e garanta a sua.
             ],
             'lead' =>
                 'A representatividade dos povos africanos e a divulgação de suas identidades culturais são os temas centrais da exposição “Ex África”, que está em cartaz no Centro Cultural Banco do Brasil (CCBB) até o dia 26 de março. A mostra conta com vídeos, músicas, esculturas, fotografias e pinturas que remetem à cultura africana contemporânea. A entrada é franca e a exposição está aberta de quarta a segunda, das 9h às 21h. A poucos metros da Assembleia Legislativa do Estado do Rio de Janeiro (Alerj), o CCBB é uma ótima opção cultural para quem trabalha no Centro e está localizado na Rua Primeiro de Março, número 66.',
-            'body' =>
-                '
+            'body' => '
 A exposição aborda desde a vida corrida nos grandes centros urbanos africanos até as desigualdades sociais presentes no continente. Entre os destaques está a sala dedicada ao Afrobeat, ritmo musical popular na cidade de Lagos, maior centro urbano da Nigéria e da África.
 
 Outro ponto alto da mostra é o ensaio fotográfico Code Noir (Código Negro), do fotógrafo Leonce Raphael Agbodjelou, que é natural da República do Benim.  O Código Negro era um decreto francês sobre como gerenciar escravos. Agbodjelou representa de forma sensível as tristes heranças da escravidão em seu país. Ele fotografou, entre outras coisas, descendentes de escravos com fotos de seus parentes e locais que foram marcados por essa triste história, como uma quadra de basquete que em outros tempos foi um mercado de escravos.
@@ -173,7 +170,7 @@ O acervo do futuro museu será composto por objetos que possam reconstituir a co
             'tags' => ['exposição', 'arte', 'áfrica', 'ccbb']
         ],
         [
-            'title' => "Curiosidades do Palácio Tiradentes",
+            'title' => 'Curiosidades do Palácio Tiradentes',
             'order' => 4,
             'published' => true,
             'category' => 'Alerj',
@@ -193,8 +190,7 @@ O acervo do futuro museu será composto por objetos que possam reconstituir a co
             ],
             'lead' =>
                 'Todos que circulam diariamente pelo Palácio Tiradentes sabem que há muita história a contar nesses 92 anos de existência. O prédio chama a atenção por sua beleza arquitetônica e também pela imponência. A atual sede da Assembleia Legislativa do Estado do Rio de Janeiro já foi cadeia no Brasil Colônia - onde inclusive o mártir da Inconfidência Mineira, Tiradentes, ficou preso e, já na República, foi Câmara dos Deputados.',
-            'body' =>
-                '
+            'body' => '
 Um local de tantas histórias tem alguns detalhes que podem passar despercebidos. Você sabia, por exemplo, que onde hoje funciona um banco, no térreo, já foi um restaurante?
  
 O restaurante, com paredes e colunas decoradas com detalhes em gesso, tinha cozinha e mobiliário para comportar até 150 pessoas. Os artistas Augusto José Marques Júnior e Genesco Murta pintaram seis painéis para decorar as paredes. Os tamanhos das pinturas variam entre 1,58m de altura por 1,54m e 2,6m de largura e representam cenas do campo e da pecuária. As telas são descritas pelos artistas como a “visão bucólica das paisagens nativas, representando poéticos cenários dos nossos crepúsculos sobre os campos lavradios”. O restaurante, no entanto, foi desativado há décadas. Desde 1984, o atual banco ocupa o espaço que guarda ainda lembranças do seu passado.
@@ -203,7 +199,7 @@ O restaurante, com paredes e colunas decoradas com detalhes em gesso, tinha cozi
             'tags' => ['palácio tiradentes']
         ],
         [
-            'title' => "Onde solucionar seu problema",
+            'title' => 'Onde solucionar seu problema',
             'order' => 5,
             'published' => false,
             'category' => 'RH',
@@ -221,8 +217,7 @@ O restaurante, com paredes e colunas decoradas com detalhes em gesso, tinha cozi
             ],
             'lead' =>
                 'Sabe aquela papelada de trabalho que você precisa agilizar, mas não sabe por onde começar?  A equipe da Subdiretoria de Recursos Humanos da Alerj (RH) está a postos para ajudar a resolver tudo isso.',
-            'body' =>
-                '
+            'body' => '
 Para começar, qualquer demanda sobre **Legislação de Pessoal**, ligue 1370. Este canal atendente a todos os servidores efetivos, requisitados e demais colaboradores da Casa.
 
 Para casos específicos entre em contato com o setor através dos seguintes números:
@@ -255,8 +250,7 @@ Para os **estagiários**, o ramal de atendimento é 1369.
     public static function all()
     {
         return static::allPosts()->map(function ($post) {
-            $post['read_also'] = static
-                ::allPosts()
+            $post['read_also'] = static::allPosts()
                 ->whereNotIn('slug', [$post->slug])
                 ->values();
 
@@ -266,8 +260,7 @@ Para os **estagiários**, o ramal de atendimento é 1369.
 
     public static function featured()
     {
-        return static
-            ::all()
+        return static::all()
             ->where('featured', true)
             ->values()
             ->toArray();
@@ -298,13 +291,11 @@ Para os **estagiários**, o ramal de atendimento é 1369.
 
         $post['date'] = Carbon::parse($post['created_at'])->format('F Y');
 
-        $post['main_photo'] = static
-            ::makePhotosCollection($post['photos'])
+        $post['main_photo'] = static::makePhotosCollection($post['photos'])
             ->where('main', true)
             ->first();
 
-        $post['other_photos'] = static
-            ::makePhotosCollection($post['photos'])
+        $post['other_photos'] = static::makePhotosCollection($post['photos'])
             ->where('main', false)
             ->values();
 
@@ -313,8 +304,7 @@ Para os **estagiários**, o ramal de atendimento é 1369.
 
     public static function nonFeatured()
     {
-        return static
-            ::all()
+        return static::all()
             ->where('featured', false)
             ->values()
             ->toArray();
@@ -331,9 +321,7 @@ Para os **estagiários**, o ramal de atendimento é 1369.
                 $notes .
                 (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
 
-            $photo['author_credits'] = (!empty($author)
-                ? "(Foto: $author)"
-                : '');
+            $photo['author_credits'] = !empty($author) ? "(Foto: $author)" : '';
 
             return $photo;
         });

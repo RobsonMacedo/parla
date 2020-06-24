@@ -3,7 +3,7 @@ namespace App\Data\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ArticleAuthor extends Model
+class ArticleAuthor extends BaseModel
 {
     protected $table = 'article_authors';
 

@@ -5,11 +5,12 @@ use App\Data\Presenters\BasePresenter;
 use Illuminate\Database\Eloquent\Model;
 use McCool\LaravelAutoPresenter\Facades\AutoPresenter;
 use McCool\LaravelAutoPresenter\HasPresenter;
-use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Auditable as AuditableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
 
-abstract class BaseModel extends Model implements HasPresenter
+abstract class BaseModel extends Model implements HasPresenter, Auditable
 {
-    use Auditable;
+    use AuditableTrait;
 
     /**
      * @var array

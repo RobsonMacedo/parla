@@ -7,7 +7,7 @@ use Jenssegers\Date\Date as Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\Markdown\Service as Markdown;
 
-class Article extends Model
+class Article extends BaseModel
 {
     use HasTags;
 
@@ -74,7 +74,7 @@ class Article extends Model
             'year' => $this->edition->year,
             'month' => $this->edition->month,
             'number' => $this->edition->number,
-            'slug' => $slug = $this->slug
+            'slug' => ($slug = $this->slug)
         ]);
     }
 
@@ -149,9 +149,7 @@ class Article extends Model
                 $notes .
                 (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
 
-            $photo['author_credits'] = (!empty($author)
-                ? "(Foto: $author)"
-                : '');
+            $photo['author_credits'] = !empty($author) ? "(Foto: $author)" : '';
 
             return $photo;
         });
