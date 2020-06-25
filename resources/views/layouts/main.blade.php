@@ -17,8 +17,9 @@
             window.Laravel = {!! json_encode([
                 'csrfToken' => csrf_token(),
                 'apiPrefix' => '/api/v1',
+                'apiPrefix' => \Auth::user()->api_token ?? '',
                 'currentPost' => isset($post) ? json_decode(json_encode($post->toArray())) : null,
-                'currentEdition' => isset($currentEdition) ? $currentEdition : 'last',
+                'currentEdition' => isset($currentEdition) ? json_decode(json_encode($currentEdition->toArray())) : 'last',
             ]) !!};
         </script>
 

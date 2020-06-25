@@ -5,6 +5,7 @@ use App\Data\Models\User;
 use App\Services\Authorization;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class Users extends Base
 {
@@ -85,6 +86,8 @@ class Users extends Base
                 $user->email = $email;
 
                 $user->password = Hash::make($email);
+
+                $user->api_token = Str::random(60);
 
                 $user->save();
             }
