@@ -20,6 +20,12 @@ php artisan parla:download-images
 ```
 O comando varre todas as imagens da tabela `article_photos`, faz download, salva na pasta storage com link público e atualiza a referência no banco de dados. Isso evita que hajam urls externas referenciadas.
 
+#### Baixar imagens e salvar na pasta local
+```
+php artisan parla:download-file-fom-url <file_url>
+```
+O comando faz download da imagem do link <file_url>, salva na pasta storage com link público. Isso evita que hajam urls externas referenciadas.
+
 
 ### Instalação 
 #### Guia genérico de uma aplicação desenvolvida em PHP pelo Projetos Especiais
