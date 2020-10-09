@@ -22,7 +22,7 @@ O comando varre todas as imagens da tabela `article_photos`, faz download, salva
 
 #### Baixar imagens e salvar na pasta local
 ```
-php artisan parla:download-file-fom-url <file_url>
+php artisan parla:download-file-from-url <file_url>
 ```
 O comando faz download da imagem do link <file_url>, salva na pasta storage com link público. Isso evita que hajam urls externas referenciadas.
 
