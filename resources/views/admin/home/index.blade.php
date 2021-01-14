@@ -27,10 +27,17 @@
                 </li>
 
                 <li
-                    role="presentation"
-                    @click="__selectEditorialPane()"
+                        role="presentation"
+                        @click="__selectEditorialPane()"
                 >
                     <a href="#editorial" aria-controls="profile" role="tab" data-toggle="tab">Expediente</a>
+                </li>
+
+                <li
+                        role="presentation"
+                        @click="__selectUploadsPane()"
+                >
+                    <a href="#uploads" aria-controls="profile" role="tab" data-toggle="tab">Uploads</a>
                 </li>
             </ul>
 
@@ -47,6 +54,10 @@
 
                 <div role="tabpanel" class="tab-pane" id="editorial">
                     @include('admin.home.partials.editorial')
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="uploads">
+                    @include('admin.home.partials.uploads')
                 </div>
             </div>
         </div>

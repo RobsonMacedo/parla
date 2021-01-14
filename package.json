@@ -33,6 +33,9 @@
     },
     "dependencies": {
         "uuid": "^3.4.0",
+        "vue-clipboard2": "^0.3.1",
+        "vue-sweetalert2": "^4.1.1",
+        "vue2-dropzone": "^3.6.0",
         "vuex": "^3.3.0"
     }
 }

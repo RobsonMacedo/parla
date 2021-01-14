@@ -4,605 +4,647 @@ import { mapState } from 'vuex'
 import { mapGetters } from 'vuex'
 
 if (jQuery('#' + appName).length > 0) {
-    new Vue({
-        el: '#' + appName,
-
-        store: window.vuexAdminStore,
-
-        methods: {
-            ...mapMutations([
-                'setEditions',
-                'setEditorial',
-                'setEditorialCopy',
-                'setBusy',
-                'setFilter',
-                'setOrderBy',
-                'setTimeout',
-                'setCurrentArticle',
-                'setIFrameUrl',
-                'setNewEditionNumber',
-                'setNewEditionYear',
-                'setNewEditionMonth',
-                'setCurrentPhotoId',
-                'setNewPhotoAuthor',
-                'setNewPhotoUrlHighres',
-                'setNewPhotoUrlLowres',
-                'setNewPhotoNotes',
-            ]),
-
-            ...mapMutations({
-                __updateCurrentArticleField: 'updateCurrentArticleField',
-                __updateCurrentPhotoField: 'updateCurrentPhotoField',
-                __updateLead: 'updateLead',
-                __updateLeadMutator: 'updateLead',
-                __updateBodyMutator: 'updateBody',
-                __updateLeadHtml: 'updateLeadHtml',
-                __updateBodyHtml: 'updateBodyHtml',
-                __pushArticle: 'pushArticle',
-                __setCurrentArticleFeatured: 'setCurrentArticleFeatured',
-                __clearNewEdition: 'clearNewEdition',
-                __loadNewEditionData: 'loadNewEditionData',
-                __clearNewPhoto: 'clearNewPhoto',
-                __setCurrentEdition: 'setCurrentEdition',
-                __setEditionArticles: 'setEditionArticles',
-            }),
-
-            __typeKeyUp() {
-                clearTimeout(this.timeout)
-
-                const me = this
-
-                this.setTimeout(
-                    setTimeout(function() {
-                        me.__refreshMarkdown()
-                    }, 500),
-                )
-            },
-
-            __clearFilter() {
-                this.setFilter('')
-            },
-
-            __findFirstArticle: function() {
-                if (!empty(this.currentArticle)) {
-                    if (this.currentArticle.new) {
-                        return findItemByValue(
-                            this.currentArticle.title,
-                            this.editionArticles[this.currentEdition.id],
-                            'title',
-                        )
-                    }
-
-                    return this.__findArticleById(this.currentArticle.id)
-                }
-
-                return !empty(this.editionArticles) &&
-                    !empty(this.editionArticles[this.currentEdition.id]) &&
-                    !empty(this.editionArticles[this.currentEdition.id][0])
-                    ? this.editionArticles[this.currentEdition.id][0]
-                    : null
-            },
-
-            __loadArticles() {
-                var me = this
-
-                me.setBusy(true)
-
-                if (!empty(me.currentEdition)) {
-                    return axios
-                        .get('/api/posts/' + me.currentEdition.id + '/all')
-                        .then(function(response) {
-                            me.__setEditionArticles({
-                                editionId: me.currentEdition.id,
-                                value: response.data,
-                            })
-
-                            me.__selectArticle(me.__findFirstArticle())
-
-                            me.setBusy(false)
-                        })
-                }
-            },
-
-            __loadEditions() {
-                var me = this
-
-                me.setBusy(true)
-
-                return axios.get('/api/editions?allowUnpublished=1').then(function(response) {
-                    me.setEditions(response.data)
-
-                    me.__selectCurrentOrLastEdition()
-                })
-            },
-
-            __loadEditorial() {
-                var me = this
-
-                return axios.get('/api/editorial').then(function(response) {
-                    me.setEditorial(response.data.text)
-
-                    me.setEditorialCopy(response.data.text)
-                })
-            },
-
-            __saveEditorial() {
-                const me = this
-
-                return axios.post('/api/editorial', {editorial: this.editorial}).then(function(response) {
-                    me.__loadEditorial()
-                })
-            },
-
-            __selectCurrentOrLastEdition(forceLast) {
-                this.__selectEdition(
-                    this.currentEdition && !forceLast
-                        ? this.__findEditionById(this.currentEdition.id)
-                        : this.editions[this.editions.length - 1],
-                    true,
-                )
-            },
-
-            __getArrowClass() {
-                if (this.orderType == 'asc') {
-                    return 'fa-arrow-down'
-                }
-
-                return 'fa-arrow-up'
-            },
-
-            __selectEdition(edition, force) {
-                if ((!empty(force) && force) || empty(this.currentEdition)) {
-                    this.__setCurrentEdition(edition)
-                }
-
-                this.__loadArticles()
-            },
-
-            __selectArticle(article) {
-                if (!article) {
-                    return
-                }
-
-                this.setCurrentArticle(this.__findArticleById(article.id))
-
-                if (this.currentPhotoId) {
-                    this.setCurrentPhotoId(this.currentPhotoId)
-                }
-            },
-
-            __isCurrentArticle(article) {
-                return (
-                    article &&
-                    this.currentArticle &&
-                    article.id === this.currentArticle.id
-                )
-            },
-
-            __unchanged() {
-                if (empty(this.currentArticle)) {
-                    return true
-                }
-
-                return (
-                    JSON.stringify(this.currentArticle) ===
-                    JSON.stringify(
-                        this.__findArticleById(
-                            this.currentArticle.id,
-                            this.editionArticlesOriginals[
-                                this.currentEdition.id
-                            ],
-                        ),
-                    )
-                )
-            },
-
-            __photoUnchanged() {
-                return (
-                    JSON.stringify(this.currentPhoto) ===
-                    JSON.stringify(this.currentPhotoOriginal)
-                )
-            },
-
-            __newPhotoUnchanged() {
-                return (
-                    JSON.stringify(this.newPhoto) ===
-                    JSON.stringify(this.cleanNewPhoto)
-                )
-            },
-
-            __updateLead(lead) {
-                this.__updateLeadMutator(lead)
-
-                this.__typeKeyUp()
-            },
-
-            __updateBody(body) {
-                this.__updateBodyMutator(body)
-
-                this.__typeKeyUp()
-            },
-
-            __refreshMarkdown() {
-                const article = this.currentArticle
-
-                let me = this
-
-                axios
-                    .post('/api/markdown/to/html', {
-                        lead: article.lead,
-                        body: article.body,
-                    })
-                    .then(function(response) {
-                        me.__updateLeadHtml(response.data.lead_html)
-
-                        me.__updateBodyHtml(response.data.body_html)
-                    })
-            },
-
-            __createArticle() {
-                let currentArticle = this.currentArticle
-
-                var article = clone(currentArticle ? currentArticle : {})
-
-                for (var prop in article) {
-                    if (article.hasOwnProperty(prop)) {
-                        article[prop] = null
-                    }
-                }
-
-                article['id'] = -1
-
-                article['new'] = true
-
-                article['edition_id'] = this.currentEdition.id
-
-                article['order'] = this.__getLastArticleOrder() + 1
-
-                this.__pushArticle(article)
-
-                this.__selectArticle(article)
-            },
-
-            __toggleCurrentPublished() {
-                const me = this
-
-                const command = this.currentArticle.published_at
-                    ? 'unpublish'
-                    : 'publish'
-
-                this.__get(
-                    '/api/posts/' +
-                        this.currentArticle.edition.id +
-                        '/' +
-                        this.currentArticle.id +
-                        '/' +
-                        command,
-                ).then(function() {
-                    me.__loadEditions()
-                })
-            },
-
-            __toggleCurrentPhotoMain() {
-                const me = this
-
-                const command = !this.currentPhoto.main
-                    ? 'setMain'
-                    : 'unsetMain'
-
-                this.__get(
-                    '/api/photos/' + this.currentPhoto.id + '/' + command,
-                ).then(function() {
-                    me.__loadArticles()
-                })
-            },
-
-            __toggleCurrentFeatured() {
-                this.__setCurrentArticleFeatured(!this.currentArticle.featured)
-
-                this.__saveCurrent()
-            },
-
-            __togglePublishedEdition() {
-                const me = this
-
-                const command = this.currentEdition.published_at
-                    ? 'unpublish'
-                    : 'publish'
-
-                this.__get(
-                    '/api/editions/' + this.currentEdition.id + '/' + command,
-                ).then(function() {
-                    me.__loadEditions()
-                })
-            },
-
-            __get(url) {
-                const me = this
-
-                me.setBusy(true)
-
-                return axios.get(url).then(function() {
-                    me.setBusy(false)
-                })
-            },
-
-            __saveCurrent() {
-                const me = this
-
-                axios
-                    .post('/api/posts/', { article: me.currentArticle })
-                    .then(function() {
-                        me.__loadArticles()
-                    })
-            },
-
-            __saveCurrentPhoto() {
-                const me = this
-
-                axios
-                    .post('/api/photos/' + me.currentPhoto.id, me.currentPhoto)
-                    .then(function() {
-                        me.__loadArticles()
-                    })
-            },
-
-            __moveUp(article) {
-                const me = this
-
-                this.__get('/api/posts/' + article.id + '/move-up').then(
-                    function() {
-                        me.__loadArticles()
-                    },
-                )
-            },
-
-            __moveDown(article) {
-                const me = this
-
-                this.__get('/api/posts/' + article.id + '/move-down').then(
-                    function() {
-                        me.__loadArticles()
-                    },
-                )
-            },
-
-            __canMoveUp(article) {
-                return article.order > 1
-            },
-
-            __canMoveDown(article) {
-                return article.order < this.__getLastArticleOrder()
-            },
-
-            __getLastArticleOrder() {
-                const articles = this.__currentArticles()
-
-                if (empty(articles)) {
-                    return 0
-                }
-
-                return articles.reduce(function(a, b) {
-                    return a.order >= b.order ? a : b
-                }).order
-            },
-
-            __findArticleById(id, articles, field) {
-                if (!articles || typeof articles === 'undefined') {
-                    if (!this.currentEdition) {
-                        return null
-                    }
-                    articles = this.__currentArticles()
-                }
-
-                return findItemByValue(id, articles, field)
-            },
-
-            __findEditionById(id) {
-                for (var i = 0; i < this.editions.length; i++) {
-                    if (this.editions[i].id == id) {
-                        return this.editions[i]
-                    }
-                }
-            },
-
-            __filteredArticles() {
-                var filter = unaccent(this.filter.trim())
-
-                var split = filter.split(' ')
-
-                if (split.length > 1) {
-                    filter = '^(?=.*\\b' + split.join('\\b)(?=.*\\b') + '\\b).+'
-                    filter = '(?=.*' + split.join(')(?=.*') + ')'
-                }
-
-                var filtered = _.filter(this.__currentArticles(), function(
-                    item,
-                ) {
-                    for (var key in item) {
-                        if (
-                            unaccent(String(item[key])).match(
-                                new RegExp(filter, 'i'),
-                            )
-                        ) {
-                            return true
-                        }
-                    }
-
-                    return false
-                })
-
-                var orderBy = this.orderBy
-
-                var orderType = this.orderType
-
-                var ordered = _.orderBy(
-                    filtered,
-
-                    function(item) {
-                        return item[orderBy] || ''
-                    },
-
-                    orderType,
-                )
-
-                return ordered
-            },
-
-            __orderedPhotos() {
-                return _.orderBy(
-                    this.currentArticle.photos,
-
-                    'id',
-
-                    'desc',
-                )
-            },
-
-            __filteredEditions() {
-                return _.orderBy(this.editions, 'number', 'desc')
-            },
-
-            __selectAdminPane() {
-                this.setIFrameUrl(null)
-            },
-
-            __selectPreviewPane() {
-                this.setIFrameUrl('/editions/' + this.currentEdition.number)
-            },
-
-            __selectEditorialPane() {
-                this.setIFrameUrl(null)
-            },
-
-            __updateField(field, value) {
-                this.__updateCurrentArticleField({ field: field, value: value })
-            },
-
-            __updatePhotoField(field, value) {
-                this.__updateCurrentPhotoField({ field: field, value: value })
-            },
-
-            __createNewEdition() {
-                const me = this
-
-                axios
-                    .post('/api/editions', this.newEdition)
-                    .then(function(response) {
-                        me.setEditions(response.data)
-
-                        me.__selectCurrentOrLastEdition(true)
-
-                        me.__clearNewEdition()
-                    })
-            },
-
-            __updateNewEdition() {
-                const me = this
-
-                axios
-                    .post('/api/editions/'+this.newEdition.id, this.newEdition)
-                    .then(function(response) {
-                        me.setEditions(response.data)
-                    })
-            },
-
-            __createNewPhoto() {
-                const me = this
-
-                let newPhoto = this.newPhoto
-
-                newPhoto.article_id = this.currentArticle.id
-
-                axios.post('/api/photos/', newPhoto).then(function() {
-                    me.__loadArticles()
-
-                    me.__clearNewPhoto()
-                })
-            },
-
-            __currentArticles() {
-                return this.currentArticles
-            },
-
-            __selectPhoto(photo) {
-                this.setCurrentPhotoId(photo.id)
-            },
-
-            __currentEditionIsPublished() {
-                if (empty(this.currentEdition)) {
-                    return false
-                }
-
-                return this.currentEdition.published_at
-            },
-
-            __backup() {
-                window.location = '/admin/backup'
-            },
-        },
-
-        computed: {
-            ...mapGetters(['currentArticles']),
-
-            ...mapState({
-                editions: state => state.editions,
-
-                busy: state => state.busy,
-
-                filter: state => state.filter,
-
-                orderBy: state => state.orderBy,
-
-                currentEdition: state => state.currentEdition,
-
-                editionArticles: state => state.editionArticles,
-
-                editionArticlesOriginals: state =>
-                    state.editionArticlesOriginals,
-
-                newEdition: state => state.newEdition,
-
-                newPhoto: state => state.newPhoto,
-
-                cleanNewPhoto: state => state.cleanNewPhoto,
-
-                iFrameUrl: state => state.iFrameUrl,
-
-                currentArticle: state => state.currentArticle,
-
-                timeout: state => state.timeout,
-
-                currentPhotoId: state => state.currentPhotoId,
-
-                currentPhoto: state => state.currentPhoto,
-
-                currentPhotoOriginal: state => state.currentPhotoOriginal,
-
-                editorialCopy: state => state.editorialCopy,
-            }),
-
-            editorial: {
-                get() {
-                    return this.$store.state.editorial
-                },
-                set(value) {
-                    this.$store.commit('setEditorial', value)
-                }
+  new Vue({
+    el: '#' + appName,
+
+    store: window.vuexAdminStore,
+
+    methods: {
+      ...mapMutations([
+        'setEditions',
+        'setEditorial',
+        'setUploads',
+        'setEditorialCopy',
+        'setBusy',
+        'setFilter',
+        'setOrderBy',
+        'setTimeout',
+        'setCurrentArticle',
+        'setIFrameUrl',
+        'setNewEditionNumber',
+        'setNewEditionYear',
+        'setNewEditionMonth',
+        'setCurrentPhotoId',
+        'setNewPhotoAuthor',
+        'setNewPhotoUrlHighres',
+        'setNewPhotoUrlLowres',
+        'setNewPhotoNotes',
+      ]),
+
+      ...mapMutations({
+        __updateCurrentArticleField: 'updateCurrentArticleField',
+        __updateCurrentPhotoField: 'updateCurrentPhotoField',
+        __updateLead: 'updateLead',
+        __updateLeadMutator: 'updateLead',
+        __updateBodyMutator: 'updateBody',
+        __updateLeadHtml: 'updateLeadHtml',
+        __updateBodyHtml: 'updateBodyHtml',
+        __pushArticle: 'pushArticle',
+        __setCurrentArticleFeatured: 'setCurrentArticleFeatured',
+        __clearNewEdition: 'clearNewEdition',
+        __loadNewEditionData: 'loadNewEditionData',
+        __clearNewPhoto: 'clearNewPhoto',
+        __setCurrentEdition: 'setCurrentEdition',
+        __setCurrentUpload: 'setCurrentUpload',
+        __setEditionArticles: 'setEditionArticles',
+      }),
+
+      __loadUploads() {
+        var me = this
+
+        return axios.get('/api/uploaded-files').then(function(response) {
+          me.setUploads(response.data)
+        })
+      },
+
+      __typeKeyUp() {
+        clearTimeout(this.timeout)
+
+        const me = this
+
+        this.setTimeout(
+          setTimeout(function() {
+            me.__refreshMarkdown()
+          }, 500),
+        )
+      },
+
+      __clearFilter() {
+        this.setFilter('')
+      },
+
+      __findFirstArticle: function() {
+        if (!empty(this.currentArticle)) {
+          if (this.currentArticle.new) {
+            return findItemByValue(
+              this.currentArticle.title,
+              this.editionArticles[this.currentEdition.id],
+              'title',
+            )
+          }
+
+          return this.__findArticleById(this.currentArticle.id)
+        }
+
+        return !empty(this.editionArticles) &&
+          !empty(this.editionArticles[this.currentEdition.id]) &&
+          !empty(this.editionArticles[this.currentEdition.id][0])
+          ? this.editionArticles[this.currentEdition.id][0]
+          : null
+      },
+
+      __loadArticles() {
+        var me = this
+
+        me.setBusy(true)
+
+        if (!empty(me.currentEdition)) {
+          return axios
+            .get('/api/posts/' + me.currentEdition.id + '/all')
+            .then(function(response) {
+              me.__setEditionArticles({
+                editionId: me.currentEdition.id,
+                value: response.data,
+              })
+
+              me.__selectArticle(me.__findFirstArticle())
+
+              me.setBusy(false)
+            })
+        }
+      },
+
+      __clipboardCopyError() {
+        const $this = this
+
+        $this.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2000,
+          icon: 'error',
+          title: 'Erro ao copiar',
+        })
+      },
+
+      __clipboardCopySuccess() {
+        const $this = this
+
+        $this.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timer: 2000,
+          icon: 'success',
+          title: 'Link copiado para a área de transferência',
+        })
+      },
+
+      __loadEditions() {
+        var me = this
+
+        me.setBusy(true)
+
+        return axios
+          .get('/api/editions?allowUnpublished=1')
+          .then(function(response) {
+            me.setEditions(response.data)
+
+            me.__selectCurrentOrLastEdition()
+          })
+      },
+
+      __loadEditorial() {
+        var me = this
+
+        return axios.get('/api/editorial').then(function(response) {
+          me.setEditorial(response.data.text)
+
+          me.setEditorialCopy(response.data.text)
+        })
+      },
+
+      __saveEditorial() {
+        const me = this
+
+        return axios
+          .post('/api/editorial', { editorial: this.editorial })
+          .then(function(response) {
+            me.__loadEditorial()
+          })
+      },
+
+      __selectCurrentOrLastEdition(forceLast) {
+        this.__selectEdition(
+          this.currentEdition && !forceLast
+            ? this.__findEditionById(this.currentEdition.id)
+            : this.editions[this.editions.length - 1],
+          true,
+        )
+      },
+
+      __getArrowClass() {
+        if (this.orderType == 'asc') {
+          return 'fa-arrow-down'
+        }
+
+        return 'fa-arrow-up'
+      },
+
+      __selectEdition(edition, force) {
+        if ((!empty(force) && force) || empty(this.currentEdition)) {
+          this.__setCurrentEdition(edition)
+        }
+
+        this.__loadArticles()
+      },
+
+      __selectUpload(upload, force) {
+        if ((!empty(force) && force) || empty(this.currentUpload)) {
+          this.__setCurrentUpload(upload)
+        }
+
+        // this.__loadArticles()
+      },
+
+      __selectArticle(article) {
+        if (!article) {
+          return
+        }
+
+        this.setCurrentArticle(this.__findArticleById(article.id))
+
+        if (this.currentPhotoId) {
+          this.setCurrentPhotoId(this.currentPhotoId)
+        }
+      },
+
+      __isCurrentArticle(article) {
+        return (
+          article &&
+          this.currentArticle &&
+          article.id === this.currentArticle.id
+        )
+      },
+
+      __unchanged() {
+        if (empty(this.currentArticle)) {
+          return true
+        }
+
+        return (
+          JSON.stringify(this.currentArticle) ===
+          JSON.stringify(
+            this.__findArticleById(
+              this.currentArticle.id,
+              this.editionArticlesOriginals[this.currentEdition.id],
+            ),
+          )
+        )
+      },
+
+      __photoUnchanged() {
+        return (
+          JSON.stringify(this.currentPhoto) ===
+          JSON.stringify(this.currentPhotoOriginal)
+        )
+      },
+
+      __newPhotoUnchanged() {
+        return (
+          JSON.stringify(this.newPhoto) === JSON.stringify(this.cleanNewPhoto)
+        )
+      },
+
+      __updateLead(lead) {
+        this.__updateLeadMutator(lead)
+
+        this.__typeKeyUp()
+      },
+
+      __updateBody(body) {
+        this.__updateBodyMutator(body)
+
+        this.__typeKeyUp()
+      },
+
+      __refreshMarkdown() {
+        const article = this.currentArticle
+
+        let me = this
+
+        axios
+          .post('/api/markdown/to/html', {
+            lead: article.lead,
+            body: article.body,
+          })
+          .then(function(response) {
+            me.__updateLeadHtml(response.data.lead_html)
+
+            me.__updateBodyHtml(response.data.body_html)
+          })
+      },
+
+      __createArticle() {
+        let currentArticle = this.currentArticle
+
+        var article = clone(currentArticle ? currentArticle : {})
+
+        for (var prop in article) {
+          if (article.hasOwnProperty(prop)) {
+            article[prop] = null
+          }
+        }
+
+        article['id'] = -1
+
+        article['new'] = true
+
+        article['edition_id'] = this.currentEdition.id
+
+        article['order'] = this.__getLastArticleOrder() + 1
+
+        this.__pushArticle(article)
+
+        this.__selectArticle(article)
+      },
+
+      __toggleCurrentPublished() {
+        const me = this
+
+        const command = this.currentArticle.published_at
+          ? 'unpublish'
+          : 'publish'
+
+        this.__get(
+          '/api/posts/' +
+            this.currentArticle.edition.id +
+            '/' +
+            this.currentArticle.id +
+            '/' +
+            command,
+        ).then(function() {
+          me.__loadEditions()
+        })
+      },
+
+      __toggleCurrentPhotoMain() {
+        const me = this
+
+        const command = !this.currentPhoto.main ? 'setMain' : 'unsetMain'
+
+        this.__get('/api/photos/' + this.currentPhoto.id + '/' + command).then(
+          function() {
+            me.__loadArticles()
+          },
+        )
+      },
+
+      __toggleCurrentFeatured() {
+        this.__setCurrentArticleFeatured(!this.currentArticle.featured)
+
+        this.__saveCurrent()
+      },
+
+      __togglePublishedEdition() {
+        const me = this
+
+        const command = this.currentEdition.published_at
+          ? 'unpublish'
+          : 'publish'
+
+        this.__get(
+          '/api/editions/' + this.currentEdition.id + '/' + command,
+        ).then(function() {
+          me.__loadEditions()
+        })
+      },
+
+      __get(url) {
+        const me = this
+
+        me.setBusy(true)
+
+        return axios.get(url).then(function() {
+          me.setBusy(false)
+        })
+      },
+
+      __saveCurrent() {
+        const me = this
+
+        axios
+          .post('/api/posts/', { article: me.currentArticle })
+          .then(function() {
+            me.__loadArticles()
+          })
+      },
+
+      __saveCurrentPhoto() {
+        const me = this
+
+        axios
+          .post('/api/photos/' + me.currentPhoto.id, me.currentPhoto)
+          .then(function() {
+            me.__loadArticles()
+          })
+      },
+
+      __moveUp(article) {
+        const me = this
+
+        this.__get('/api/posts/' + article.id + '/move-up').then(function() {
+          me.__loadArticles()
+        })
+      },
+
+      __moveDown(article) {
+        const me = this
+
+        this.__get('/api/posts/' + article.id + '/move-down').then(function() {
+          me.__loadArticles()
+        })
+      },
+
+      __canMoveUp(article) {
+        return article.order > 1
+      },
+
+      __canMoveDown(article) {
+        return article.order < this.__getLastArticleOrder()
+      },
+
+      __getLastArticleOrder() {
+        const articles = this.__currentArticles()
+
+        if (empty(articles)) {
+          return 0
+        }
+
+        return articles.reduce(function(a, b) {
+          return a.order >= b.order ? a : b
+        }).order
+      },
+
+      __findArticleById(id, articles, field) {
+        if (!articles || typeof articles === 'undefined') {
+          if (!this.currentEdition) {
+            return null
+          }
+          articles = this.__currentArticles()
+        }
+
+        return findItemByValue(id, articles, field)
+      },
+
+      __findEditionById(id) {
+        for (var i = 0; i < this.editions.length; i++) {
+          if (this.editions[i].id == id) {
+            return this.editions[i]
+          }
+        }
+      },
+
+      __filteredArticles() {
+        var filter = unaccent(this.filter.trim())
+
+        var split = filter.split(' ')
+
+        if (split.length > 1) {
+          filter = '^(?=.*\\b' + split.join('\\b)(?=.*\\b') + '\\b).+'
+          filter = '(?=.*' + split.join(')(?=.*') + ')'
+        }
+
+        var filtered = _.filter(this.__currentArticles(), function(item) {
+          for (var key in item) {
+            if (unaccent(String(item[key])).match(new RegExp(filter, 'i'))) {
+              return true
             }
+          }
+
+          return false
+        })
+
+        var orderBy = this.orderBy
+
+        var orderType = this.orderType
+
+        var ordered = _.orderBy(
+          filtered,
+
+          function(item) {
+            return item[orderBy] || ''
+          },
+
+          orderType,
+        )
+
+        return ordered
+      },
+
+      __orderedPhotos() {
+        return _.orderBy(
+          this.currentArticle.photos,
+
+          'id',
+
+          'desc',
+        )
+      },
+
+      __filteredEditions() {
+        return _.orderBy(this.editions, 'number', 'desc')
+      },
+
+      __selectAdminPane() {
+        this.setIFrameUrl(null)
+      },
+
+      __selectPreviewPane() {
+        this.setIFrameUrl('/editions/' + this.currentEdition.number)
+      },
+
+      __selectEditorialPane() {
+        this.setIFrameUrl(null)
+      },
+
+      __selectUploadsPane() {
+        this.setIFrameUrl(null)
+      },
+
+      __updateField(field, value) {
+        this.__updateCurrentArticleField({ field: field, value: value })
+      },
+
+      __updatePhotoField(field, value) {
+        this.__updateCurrentPhotoField({ field: field, value: value })
+      },
+
+      __createNewEdition() {
+        const me = this
+
+        axios.post('/api/editions', this.newEdition).then(function(response) {
+          me.setEditions(response.data)
+
+          me.__selectCurrentOrLastEdition(true)
+
+          me.__clearNewEdition()
+        })
+      },
+
+      __updateNewEdition() {
+        const me = this
+
+        axios
+          .post('/api/editions/' + this.newEdition.id, this.newEdition)
+          .then(function(response) {
+            me.setEditions(response.data)
+          })
+      },
+
+      __createNewPhoto() {
+        const me = this
+
+        let newPhoto = this.newPhoto
+
+        newPhoto.article_id = this.currentArticle.id
+
+        axios.post('/api/photos/', newPhoto).then(function() {
+          me.__loadArticles()
+
+          me.__clearNewPhoto()
+        })
+      },
+
+      __currentArticles() {
+        return this.currentArticles
+      },
+
+      __selectPhoto(photo) {
+        this.setCurrentPhotoId(photo.id)
+      },
+
+      __currentEditionIsPublished() {
+        if (empty(this.currentEdition)) {
+          return false
+        }
+
+        return this.currentEdition.published_at
+      },
+
+      __backup() {
+        window.location = '/admin/backup'
+      },
+    },
+
+    computed: {
+      ...mapGetters(['currentArticles']),
+
+      ...mapState({
+        editions: state => state.editions,
+
+        uploads: state => state.uploads,
+
+        busy: state => state.busy,
+
+        filter: state => state.filter,
+
+        orderBy: state => state.orderBy,
+
+        currentEdition: state => state.currentEdition,
+
+        currentUpload: state => state.currentUpload,
+
+        editionArticles: state => state.editionArticles,
+
+        editionArticlesOriginals: state => state.editionArticlesOriginals,
+
+        newEdition: state => state.newEdition,
+
+        newPhoto: state => state.newPhoto,
+
+        cleanNewPhoto: state => state.cleanNewPhoto,
+
+        iFrameUrl: state => state.iFrameUrl,
+
+        currentArticle: state => state.currentArticle,
+
+        timeout: state => state.timeout,
+
+        currentPhotoId: state => state.currentPhotoId,
+
+        currentPhoto: state => state.currentPhoto,
+
+        currentPhotoOriginal: state => state.currentPhotoOriginal,
+
+        editorialCopy: state => state.editorialCopy,
+      }),
+
+      editorial: {
+        get() {
+          return this.$store.state.editorial
         },
-        mounted() {
-            this.__clearNewEdition()
-
-            this.__clearNewPhoto()
-
-            this.__loadEditions()
-
-            this.__loadEditorial()
-
-            this.__clearFilter()
-
-            jQuery('textarea').autogrow()
+        set(value) {
+          this.$store.commit('setEditorial', value)
         },
-    })
+      },
+    },
+    mounted() {
+      this.__clearNewEdition()
+
+      this.__clearNewPhoto()
+
+      this.__loadEditions()
+
+      this.__loadEditorial()
+
+      this.__loadUploads()
+
+      this.__clearFilter()
+
+      jQuery('textarea').autogrow()
+    },
+  })
 }

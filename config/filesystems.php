@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Filesystem Disk
@@ -42,17 +41,16 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app')
         ],
 
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
+            'url' => env('APP_URL') . '/storage',
+            'visibility' => 'public'
         ],
 
         's3' => [
@@ -61,9 +59,22 @@ return [
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
             'region' => env('AWS_DEFAULT_REGION'),
             'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            'url' => env('AWS_URL')
         ],
 
-    ],
+        'documents' => [
+            'driver' => 'local',
 
+            'sub_dir' => ($subDir = env(
+                'DOCUMENTS_FILESYSTEM_SUB_DIR',
+                'files'
+            )),
+
+            'root' => storage_path("app/public/{$subDir}"),
+
+            'url_prefix' => env('APP_URL') . '/storage/' . $subDir . '/',
+
+            'sharing_url_prefix' => '/storage/' . $subDir . '/'
+        ]
+    ]
 ];
