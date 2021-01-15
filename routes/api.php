@@ -122,3 +122,13 @@ Route::group(['prefix' => '/editorial'], function () {
         return app(EditorialRepository::class)->post($request->all());
     });
 });
+
+Route::group(['prefix' => '/uploaded-files'], function () {
+    Route::get('/', 'Admin\UploadedFiles@all')->name('uploaded-files.all');
+
+    Route::post('/{id}', 'Admin\UploadedFiles@update')->name(
+        'uploaded-files.update'
+    );
+
+    Route::post('/', 'Admin\UploadedFiles@store')->name('uploaded-files.store');
+});

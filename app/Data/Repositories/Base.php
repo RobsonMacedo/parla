@@ -1,7 +1,9 @@
 <?php
 namespace App\Data\Repositories;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 abstract class Base
 {
@@ -18,8 +20,8 @@ abstract class Base
     public function createFromRequest(Request $request)
     {
         is_null($id = $request->input('id'))
-            ? $model = new $this->model()
-            : $model = $this->model::find($id);
+            ? ($model = new $this->model())
+            : ($model = $this->model::find($id));
         $model->fill($request->all());
 
         $model->save();
@@ -101,9 +103,9 @@ abstract class Base
         return $this->makeResultForSelect($this->model::all());
     }
 
-    public function allOrderBy($field)
+    public function allOrderBy($field, $order = 'asc')
     {
-        return ($this->model::orderBy($field))->get();
+        return $this->model::orderBy($field, $order)->get();
     }
 
     /**
@@ -146,5 +148,93 @@ abstract class Base
 
             return $row;
         });
+    }
+
+    /**
+     * @return mixed
+     */
+    public function model()
+    {
+        return $this->new();
+    }
+
+    protected function qualifyColumn($name)
+    {
+        return $this->model()->qualifyColumn($name);
+    }
+
+    protected function makeQueryByAnyColumnName(
+        $type,
+        $name,
+        $arguments,
+        $query = null
+    ) {
+        if (!$query) {
+            $query = $this->model::query();
+        }
+
+        $columnName = snake_case(Str::after($name, $type));
+
+        return $query->where($this->qualifyColumn($columnName), $arguments);
+    }
+
+    protected function findByAnyColumnName($name, $arguments)
+    {
+        return $this->makeQueryByAnyColumnName(
+            'findBy',
+            $name,
+            $arguments
+        )->first();
+    }
+
+    protected function filterByAnyColumnName($columns, $arguments)
+    {
+        $query = $this->newQuery();
+
+        coollect((array) $columns)->each(function ($column) use (
+            $query,
+            $arguments
+        ) {
+            $this->makeQueryByAnyColumnName(
+                'filterBy',
+                $column,
+                $arguments,
+                $query
+            );
+        });
+
+        return $this->applyFilter($query);
+    }
+
+    protected function getByAnyColumnName($name, $arguments)
+    {
+        return $this->makeQueryByAnyColumnName(
+            'getBy',
+            $name,
+            $arguments
+        )->get();
+    }
+
+    /**
+     * @param $name
+     * @param $arguments
+     * @return mixed
+     * @throws Exception
+     */
+    public function __call($name, $arguments)
+    {
+        if (starts_with($name, 'findBy')) {
+            return $result = $this->findByAnyColumnName($name, $arguments);
+        }
+
+        if (starts_with($name, 'filterBy')) {
+            return $result = $this->filterByAnyColumnName($name, $arguments);
+        }
+
+        if (starts_with($name, 'getBy')) {
+            return $result = $this->getByAnyColumnName($name, $arguments);
+        }
+
+        throw new \Exception('Method not found: ' . $name);
     }
 }

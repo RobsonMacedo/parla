@@ -13,12 +13,10 @@ function endTimer()
 
 function toBoolean($boolean)
 {
-    return (
-        $boolean === 'true' ||
+    return $boolean === 'true' ||
         $boolean === '1' ||
         $boolean === 1 ||
-        $boolean === true
-    );
+        $boolean === true;
 }
 
 function extract_credentials($request)
@@ -28,6 +26,18 @@ function extract_credentials($request)
     $credentials['username'] = $credentials['email'];
 
     return $credentials;
+}
+
+function make_deep_path($nameHash, $length = 4)
+{
+    $deepPath = '';
+
+    for ($i = 1; $i <= $length; $i++) {
+        $deepPath =
+            $deepPath . substr($nameHash, $i - 1, 1) . DIRECTORY_SEPARATOR;
+    }
+
+    return $deepPath;
 }
 
 class Timer
