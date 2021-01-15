@@ -17,7 +17,10 @@ class UploadedFiles extends Controller
      */
     public function all(Request $request)
     {
-        return app(UploadedFilesRepository::class)->all();
+        return app(UploadedFilesRepository::class)->allOrderBy(
+            'created_at',
+            'desc'
+        );
     }
 
     /**

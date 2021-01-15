@@ -12,7 +12,7 @@ window.vuexAdminStore = new Vuex.Store({
 
     editorial: '',
 
-    uploads: [],
+    uploads: {},
 
     editorialCopy: '',
 
@@ -266,8 +266,17 @@ window.vuexAdminStore = new Vuex.Store({
   actions: {
     __loadUploads(context) {
       return axios.get('/api/uploaded-files').then(function(response) {
-        context.commit('setUploads', response.data)
+        context.commit('setUploads', response)
       })
+    },
+
+    __selectUpload(context, payload) {
+      if (
+        (!empty(payload.force) && payload.force) ||
+        empty(this.currentUpload)
+      ) {
+        this.commit('setCurrentUpload', payload.upload)
+      }
     },
   },
 })

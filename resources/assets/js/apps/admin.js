@@ -49,12 +49,14 @@ if (jQuery('#' + appName).length > 0) {
         __setEditionArticles: 'setEditionArticles',
       }),
 
-      __loadUploads() {
+      __loadUploads(page = 1) {
         var me = this
 
-        return axios.get('/api/uploaded-files').then(function(response) {
-          me.setUploads(response.data)
-        })
+        return axios
+          .get('/api/uploaded-files?page=' + page)
+          .then(function(response) {
+            me.setUploads(response)
+          })
       },
 
       __typeKeyUp() {
@@ -114,34 +116,6 @@ if (jQuery('#' + appName).length > 0) {
         }
       },
 
-      __clipboardCopyError() {
-        const $this = this
-
-        $this.$swal({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          showCancelButton: false,
-          timer: 2000,
-          icon: 'error',
-          title: 'Erro ao copiar',
-        })
-      },
-
-      __clipboardCopySuccess() {
-        const $this = this
-
-        $this.$swal({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          showCancelButton: false,
-          timer: 2000,
-          icon: 'success',
-          title: 'Link copiado para a área de transferência',
-        })
-      },
-
       __loadEditions() {
         var me = this
 
@@ -199,14 +173,6 @@ if (jQuery('#' + appName).length > 0) {
         }
 
         this.__loadArticles()
-      },
-
-      __selectUpload(upload, force) {
-        if ((!empty(force) && force) || empty(this.currentUpload)) {
-          this.__setCurrentUpload(upload)
-        }
-
-        // this.__loadArticles()
       },
 
       __selectArticle(article) {

@@ -49,6 +49,15 @@ import 'sweetalert2/dist/sweetalert2.min.css'
 window.Vue.use(VueSweetalert2)
 
 /**
+ * Vue Pagination
+ */
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
+// import Pagination from 'vue-pagination-2'
+// window.Vue.component('pagination', Pagination)
+
+/**
  * Lightbox 2
  */
 

@@ -103,9 +103,9 @@ abstract class Base
         return $this->makeResultForSelect($this->model::all());
     }
 
-    public function allOrderBy($field)
+    public function allOrderBy($field, $order = 'asc')
     {
-        return $this->model::orderBy($field)->get();
+        return $this->model::orderBy($field, $order)->get();
     }
 
     /**

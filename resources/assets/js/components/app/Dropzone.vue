@@ -50,8 +50,6 @@ export default {
 
   methods: {
     sucesso(t) {
-      dd(t)
-
       const $this = this
 
       t.previewElement.classList.add('dz-success'), 'sucesso'
