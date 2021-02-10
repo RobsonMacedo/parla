@@ -31,12 +31,6 @@
         "phpunit/phpunit": "~7.0",
         "symfony/thanks": "~1.0"
     },
-    "repositories": [
-        {
-            "url": "https://github.com/jdavidbakr/commonmark-attributes-extension",
-            "type": "git"
-        }
-    ],
     "autoload": {
         "classmap": [
             "database/seeds",
