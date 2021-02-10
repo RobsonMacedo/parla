@@ -9,11 +9,11 @@ window._ = require('lodash')
  */
 
 try {
-    window.$ = window.jQuery = require('jquery')
+  window.$ = window.jQuery = require('jquery')
 
-    require('autogrow')
+  require('autogrow')
 
-    require('bootstrap-sass')
+  require('bootstrap-sass')
 } catch (e) {}
 
 /**
@@ -21,6 +21,41 @@ try {
  */
 
 window.Vue = require('vue')
+
+/**
+ * Autoload Vue components
+ */
+const file = require.context('./components/app/', true, /\.vue$/i)
+file.keys().map(file => {
+  const name = 'App' + _.last(file.split('/')).split('.')[0]
+
+  return window.Vue.component(name, () =>
+    import('./components/app/' + basename(file)),
+  )
+})
+
+/**
+ * Vue Clipboard
+ */
+import VueClipboard from 'vue-clipboard2'
+window.Vue.use(VueClipboard)
+
+/**
+ * Vue SweetAlert
+ */
+import VueSweetalert2 from 'vue-sweetalert2'
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css'
+window.Vue.use(VueSweetalert2)
+
+/**
+ * Vue Pagination
+ */
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
+// import Pagination from 'vue-pagination-2'
+// window.Vue.component('pagination', Pagination)
 
 /**
  * Lightbox 2
@@ -53,11 +88,11 @@ window.fullcalendar = require('fullcalendar')
 let token = document.head.querySelector('meta[name="csrf-token"]')
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
 } else {
-    console.error(
-        'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token',
-    )
+  console.error(
+    'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token',
+  )
 }
 
 /**
