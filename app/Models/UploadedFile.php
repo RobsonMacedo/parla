@@ -1,5 +1,8 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
+
+use App\Data\Models\Client;
+use App\Models\BaseModel;
 
 class UploadedFile extends BaseModel
 {

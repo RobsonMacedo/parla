@@ -1,6 +1,7 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
 
+use App\Models\BaseModel;
 use App\Services\Markdown\Service;
 use Jenssegers\Date\Date as Carbon;
 use PragmaRX\Coollection\Package\Coollection;

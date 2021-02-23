@@ -1,7 +1,7 @@
 <?php
 namespace App\Data\Repositories;
 
-use App\Data\Models\ArticlePhoto;
+use App\Models\ArticlePhoto;
 
 class Photos
 {
@@ -15,7 +15,7 @@ class Photos
         $photo = $this->findById($photoId);
 
         ArticlePhoto::where('article_id', $photo->article_id)->update([
-            'main' => false
+            'main' => false,
         ]);
 
         $photo->main = $isMain;

@@ -1,8 +1,8 @@
 <?php
 namespace App\Data\Repositories;
 
-use App\Data\Models\Article;
-use App\Data\Models\Edition;
+use App\Models\Article;
+use App\Models\Edition;
 use Jenssegers\Date\Date as Carbon;
 
 class Articles
@@ -22,11 +22,7 @@ class Articles
 
         $article->edition->articles
             ->sortBy('order')
-            ->each(function ($article) use (
-                &$lastOrder,
-                &$wasFixed,
-                &$nextCode
-            ) {
+            ->each(function ($article) use (&$lastOrder, &$wasFixed, &$nextCode) {
                 $nextCode++;
 
                 if ($article->order !== $nextCode) {
@@ -70,9 +66,7 @@ class Articles
     {
         return Edition::where(
             'number',
-            $number === 'last'
-                ? $this->getLastEdition()->number ?? null
-                : $number
+            $number === 'last' ? $this->getLastEdition()->number ?? null : $number
         )
             ->take(1)
             ->get()
@@ -143,7 +137,7 @@ class Articles
 
     /**
      * @param $article
-     * @return Article[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
+     * @return \App\Models\Article[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder[]|\Illuminate\Support\Collection
      */
     protected function makeReadAlso($article)
     {
@@ -156,20 +150,16 @@ class Articles
 
     protected function fillArticleData($article)
     {
-        $article['featured'] = isset($article['featured'])
-            ? $article['featured']
-            : false;
+        $article['featured'] = isset($article['featured']) ? $article['featured'] : false;
 
         $article['link'] = route('posts.show', [
             'year' => $article->edition->year,
             'month' => $article->edition->month,
             'number' => $article->edition->number,
-            'slug' => ($slug = $article->slug)
+            'slug' => ($slug = $article->slug),
         ]);
 
-        $article['authors_string'] = $this->makeAuthorsString(
-            $article['authors']
-        );
+        $article['authors_string'] = $this->makeAuthorsString($article['authors']);
 
         $article['slug'] = $slug;
 
@@ -179,9 +169,7 @@ class Articles
             ->where('main', true)
             ->first();
 
-        $article['other_photos'] = $this->makePhotosCollection(
-            $article['photos']
-        )
+        $article['other_photos'] = $this->makePhotosCollection($article['photos'])
             ->where('main', false)
             ->values();
 
@@ -197,10 +185,7 @@ class Articles
         return join(
             ' e ',
             array_filter(
-                array_merge(
-                    array(join(', ', array_slice($authors, 0, -1))),
-                    array_slice($authors, -1)
-                ),
+                array_merge([join(', ', array_slice($authors, 0, -1))], array_slice($authors, -1)),
                 'strlen'
             )
         );
@@ -214,8 +199,7 @@ class Articles
             $notes = $photo['notes'];
 
             $photo['notes_and_author'] =
-                $notes .
-                (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
+                $notes . (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
 
             $photo['author_credits'] = !empty($author) ? "(Foto: $author)" : '';
 

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Data\Models\ArticlePhoto as ArticlePhotoModel;
+use App\Models\ArticlePhoto as ArticlePhotoModel;
 use Illuminate\Support\Str;
 
 class DownloadImages extends Command

@@ -2,41 +2,41 @@
 
 Auth::routes();
 
-Route::get('/', 'Home@index')->name('home');
+use App\Http\Controllers\Home;
+use App\Http\Controllers\Posts;
+use App\Http\Controllers\Contact;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\Home as AdminHome;
+use App\Http\Controllers\Admin\Users as AdminUsers;
 
-Route::get('/editions/{number}', 'Home@editions')->name('editions');
+Route::get('/', [Home::class, 'index'])->name('home');
 
-Route::get('/posts', 'Home@post')->name('post');
+Route::get('/editions/{number}', [Home::class, 'editions'])->name('editions');
 
-Route::get('/posts/{year}/{month}/{number}/{slug}', 'Posts@show')->name(
-    'posts.show'
-);
+Route::get('/posts', [Home::class, 'post'])->name('post');
 
-Route::get('/contact', 'Contact@index')->name('contact.index');
+Route::get('/posts/{year}/{month}/{number}/{slug}', [Posts::class, 'show'])->name('posts.show');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/contact', [Contact::class, 'index'])->name('contact.index');
 
-Route::group(
-    ['prefix' => '/admin', 'middleware' => ['auth', 'administrators']],
-    function () {
-        Route::get('/', 'Admin\Home@index')->name('admin.home.index');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-        Route::get(
-            '/administrator/add/{username}',
-            'Admin\Users@addAdmin'
-        )->name('admin.addAdmin');
+Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'administrators']], function () {
+    Route::get('/', [AdminHome::class, 'index'])->name('admin.home.index');
 
-        Route::get(
-            '/administrator/remove/{username}',
-            'Admin\Users@removeAdmin'
-        )->name('admin.addAdmin');
+    Route::get('/administrator/add/{username}', [AdminUsers::class, 'addAdmin'])->name(
+        'admin.addAdmin'
+    );
 
-        Route::get('/users/list', 'Admin\Users@index')->name('admin.users');
+    Route::get('/administrator/remove/{username}', [AdminUsers::class, 'removeAdmin'])->name(
+        'admin.addAdmin'
+    );
 
-        Route::get('/backup', 'Admin\Users@backup')->name('admin.backups');
-    }
-);
+    Route::get('/users/list', [AdminUsers::class, 'index'])->name('admin.users');
 
-Route::get('/not-an-administrator', 'Admin\Users@notAnAdministrator')->name(
+    Route::get('/backup', [AdminUsers::class, 'backup'])->name('admin.backups');
+});
+
+Route::get('/not-an-administrator', [AdminUsers::class, 'notAnAdministrator'])->name(
     'not.an.administrator'
 );

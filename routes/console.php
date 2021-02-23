@@ -1,6 +1,6 @@
 <?php
 
-use App\Data\Models\Article;
+use App\Models\Article;
 use App\Data\Repositories\Users;
 use Ramsey\Uuid\Uuid;
 

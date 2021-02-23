@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\Data\Models\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class AddApiTokenColumn extends Migration

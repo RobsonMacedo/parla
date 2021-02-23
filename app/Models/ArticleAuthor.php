@@ -1,6 +1,7 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
 
+use App\Models\BaseModel;
 use Illuminate\Database\Eloquent\Model;
 
 class ArticleAuthor extends BaseModel

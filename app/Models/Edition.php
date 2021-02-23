@@ -1,7 +1,8 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Article;
+use App\Models\BaseModel;
 use Jenssegers\Date\Date;
 
 class Edition extends BaseModel
@@ -17,8 +18,6 @@ class Edition extends BaseModel
 
     public function getMonthNameAttribute()
     {
-        return Date::parse(
-            sprintf('%s-%s-%s', $this->year, $this->month, 1)
-        )->format('F');
+        return Date::parse(sprintf('%s-%s-%s', $this->year, $this->month, 1))->format('F');
     }
 }

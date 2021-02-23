@@ -1,10 +1,13 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
 
+use App\Models\ArticleAuthor;
+use App\Models\ArticlePhoto;
+use App\Models\BaseModel;
+use App\Models\Edition;
 use Ramsey\Uuid\Uuid;
 use Spatie\Tags\HasTags;
 use Jenssegers\Date\Date as Carbon;
-use Illuminate\Database\Eloquent\Model;
 use App\Services\Markdown\Service as Markdown;
 
 class Article extends BaseModel
@@ -20,7 +23,7 @@ class Article extends BaseModel
         'subtitle',
         'lead',
         'body',
-        'featured'
+        'featured',
     ];
 
     protected $appends = [
@@ -33,7 +36,7 @@ class Article extends BaseModel
         'lead_limited_featured_html',
         'lead_limited_html',
         'lead_html',
-        'body_html'
+        'body_html',
     ];
 
     public function edition()
@@ -74,7 +77,7 @@ class Article extends BaseModel
             'year' => $this->edition->year,
             'month' => $this->edition->month,
             'number' => $this->edition->number,
-            'slug' => ($slug = $this->slug)
+            'slug' => ($slug = $this->slug),
         ]);
     }
 
@@ -129,10 +132,7 @@ class Article extends BaseModel
         return join(
             ' e ',
             array_filter(
-                array_merge(
-                    array(join(', ', array_slice($authors, 0, -1))),
-                    array_slice($authors, -1)
-                ),
+                array_merge([join(', ', array_slice($authors, 0, -1))], array_slice($authors, -1)),
                 'strlen'
             )
         );
@@ -146,8 +146,7 @@ class Article extends BaseModel
             $notes = $photo['notes'];
 
             $photo['notes_and_author'] =
-                $notes .
-                (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
+                $notes . (!empty($notes) && !empty($author) ? " (Foto: $author)" : '');
 
             $photo['author_credits'] = !empty($author) ? "(Foto: $author)" : '';
 
@@ -174,7 +173,7 @@ class Article extends BaseModel
             if ($this->authors->where('name', $name)->count() === 0) {
                 ArticleAuthor::create([
                     'article_id' => $this->id,
-                    'name' => $name
+                    'name' => $name,
                 ]);
             }
         });

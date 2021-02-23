@@ -2,7 +2,7 @@
 
 namespace App\Data\Repositories;
 
-use App\Data\Models\UploadedFile as UploadedFileModel;
+use App\Models\UploadedFile as UploadedFileModel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
