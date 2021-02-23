@@ -2,6 +2,7 @@
  * Vuex
  */
 
+import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
@@ -125,11 +126,7 @@ window.vuexAdminStore = new Vuex.Store({
     },
 
     updateCurrentArticleField(state, payload) {
-      Vue.set(
-        state.currentArticles[state.currentEdition.id],
-        payload.field,
-        payload.value,
-      )
+      Vue.set(state.currentArticles[state.currentEdition.id], payload.field, payload.value)
     },
 
     updateCurrentPhotoField(state, payload) {
@@ -141,19 +138,11 @@ window.vuexAdminStore = new Vuex.Store({
     },
 
     updateLeadHtml(state, payload) {
-      Vue.set(
-        state.currentArticles[state.currentEdition.id],
-        'lead_html',
-        payload,
-      )
+      Vue.set(state.currentArticles[state.currentEdition.id], 'lead_html', payload)
     },
 
     updateBodyHtml(state, payload) {
-      Vue.set(
-        state.currentArticles[state.currentEdition.id],
-        'body_html',
-        payload,
-      )
+      Vue.set(state.currentArticles[state.currentEdition.id], 'body_html', payload)
     },
 
     updateBody(state, payload) {
@@ -163,11 +152,7 @@ window.vuexAdminStore = new Vuex.Store({
     setEditionArticles(state, payload) {
       Vue.set(state.editionArticles, payload.editionId, payload.value)
 
-      Vue.set(
-        state.editionArticlesOriginals,
-        payload.editionId,
-        clone(payload.value),
-      )
+      Vue.set(state.editionArticlesOriginals, payload.editionId, clone(payload.value))
     },
 
     pushArticle(state, payload) {
@@ -175,9 +160,7 @@ window.vuexAdminStore = new Vuex.Store({
 
       Vue.set(state.currentArticles, state.currentEdition.id, payload)
 
-      state.editionArticlesOriginals[state.currentEdition.id].push(
-        clone(payload),
-      )
+      state.editionArticlesOriginals[state.currentEdition.id].push(clone(payload))
     },
 
     setCurrentArticleFeatured(state, payload) {
@@ -214,8 +197,7 @@ window.vuexAdminStore = new Vuex.Store({
       state.currentEdition = payload
 
       state.currentArticle =
-        empty(state.currentArticles) ||
-        empty(state.currentArticles[state.currentEdition.id])
+        empty(state.currentArticles) || empty(state.currentArticles[state.currentEdition.id])
           ? null
           : state.currentArticles[state.currentEdition.id]
     },
@@ -265,16 +247,13 @@ window.vuexAdminStore = new Vuex.Store({
 
   actions: {
     __loadUploads(context) {
-      return axios.get('/api/uploaded-files').then(function(response) {
+      return axios.get('/api/uploaded-files').then(function (response) {
         context.commit('setUploads', response)
       })
     },
 
     __selectUpload(context, payload) {
-      if (
-        (!empty(payload.force) && payload.force) ||
-        empty(this.currentUpload)
-      ) {
+      if ((!empty(payload.force) && payload.force) || empty(this.currentUpload)) {
         this.commit('setCurrentUpload', payload.upload)
       }
     },

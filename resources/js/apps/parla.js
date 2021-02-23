@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const appName = 'vue-parla'
 
 if (jQuery('#' + appName).length > 0) {
@@ -44,7 +46,7 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       allFiltered() {
-        return this.tables.all.filter(item => {
+        return this.tables.all.filter((item) => {
           return this.canShowItem(item)
         })
       },
@@ -95,14 +97,14 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       refreshTable(table) {
-        me = this
+        const me = this
 
         axios
           .get('/api/posts/' + this.laravel.currentEdition.id + '/' + table)
-          .then(function(response) {
+          .then(function (response) {
             me.tables[table] = response.data
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error)
 
             me.tables[table] = []
@@ -110,9 +112,9 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       loadEditions() {
-        me = this
+        const me = this
 
-        axios.get('/api/editions').then(function(response) {
+        axios.get('/api/editions').then(function (response) {
           me.tables.editions = response.data
         })
       },
@@ -141,14 +143,16 @@ if (jQuery('#' + appName).length > 0) {
         return sliced
       },
 
-      refreshCurrentPost: function() {
+      refreshCurrentPost: function () {
+        const me = this
+
         if (this.currentPost.laravel && this.currentPost.laravel.slug) {
           axios
             .get('/api/posts/' + this.currentPost.laravel.slug)
-            .then(function(response) {
+            .then(function (response) {
               me.currentPost.imported = response.data
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log(error)
 
               me.currentPost.imported = null
@@ -157,14 +161,11 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       otherPhotosForLightbox() {
-        if (
-          !this.currentPost.imported ||
-          !this.currentPost.imported.other_photos
-        ) {
+        if (!this.currentPost.imported || !this.currentPost.imported.other_photos) {
           return []
         }
 
-        return this.currentPost.imported.other_photos.map(photo => {
+        return this.currentPost.imported.other_photos.map((photo) => {
           return {
             thumb: photo.url_lowres,
             src: photo.url_hires,
@@ -173,7 +174,7 @@ if (jQuery('#' + appName).length > 0) {
         })
       },
 
-      configureLightbox: function() {
+      configureLightbox: function () {
         lightbox.option({
           albumLabel: 'Foto %1 de %2',
         })
