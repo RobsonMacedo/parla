@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Edition;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class EditionsFactory extends Factory
+class EditionFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -22,10 +22,10 @@ class EditionsFactory extends Factory
     public function definition()
     {
         return [
-            'year' => 2018,
+            'year' => 2021,
             'month' => 2,
-            'number' => 0,
-            'published' => false,
+            'number' => 1,
+            'published_at' => now(),
         ];
     }
 }

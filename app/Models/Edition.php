@@ -1,12 +1,13 @@
 <?php
 namespace App\Models;
 
-use App\Models\Article;
-use App\Models\BaseModel;
 use Jenssegers\Date\Date;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Edition extends BaseModel
 {
+    use HasFactory;
+
     protected $fillable = ['year', 'month', 'number', 'published_at'];
 
     protected $appends = ['month_name'];

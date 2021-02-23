@@ -49,9 +49,9 @@ O comando faz download da imagem do link <file_url>, salva na pasta storage com 
 - Executar o comando `composer install` para instalar todas as dependências (atualizadas)
 - Executar o comando `php artisan migrate`
 
-#### No ambiente de desenvolvimento
+### Comandos para popular o banco de dados vazio para testes
 
-- vendor/bin/cghooks add --ignore-lock (uma vez)
-- vendor/bin/cghooks update (uma vez)
-- npm install (sempre)
-- npm run watch (enquanto estiver programando)
+```
+php artisan migrate
+php artisan db:seed
+```
