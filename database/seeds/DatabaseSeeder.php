@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Edition as EditionModel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -11,5 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        EditionModel::factory()->create();
     }
 }

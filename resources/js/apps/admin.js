@@ -50,13 +50,11 @@ if (jQuery('#' + appName).length > 0) {
       }),
 
       __loadUploads(page = 1) {
-        var me = this
+        const me = this
 
-        return axios
-          .get('/api/uploaded-files?page=' + page)
-          .then(function(response) {
-            me.setUploads(response)
-          })
+        return axios.get('/api/uploaded-files?page=' + page).then(function (response) {
+          me.setUploads(response)
+        })
       },
 
       __typeKeyUp() {
@@ -65,7 +63,7 @@ if (jQuery('#' + appName).length > 0) {
         const me = this
 
         this.setTimeout(
-          setTimeout(function() {
+          setTimeout(function () {
             me.__refreshMarkdown()
           }, 500),
         )
@@ -75,7 +73,7 @@ if (jQuery('#' + appName).length > 0) {
         this.setFilter('')
       },
 
-      __findFirstArticle: function() {
+      __findFirstArticle: function () {
         if (!empty(this.currentArticle)) {
           if (this.currentArticle.new) {
             return findItemByValue(
@@ -96,44 +94,40 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       __loadArticles() {
-        var me = this
+        const me = this
 
         me.setBusy(true)
 
         if (!empty(me.currentEdition)) {
-          return axios
-            .get('/api/posts/' + me.currentEdition.id + '/all')
-            .then(function(response) {
-              me.__setEditionArticles({
-                editionId: me.currentEdition.id,
-                value: response.data,
-              })
-
-              me.__selectArticle(me.__findFirstArticle())
-
-              me.setBusy(false)
+          return axios.get('/api/posts/' + me.currentEdition.id + '/all').then(function (response) {
+            me.__setEditionArticles({
+              editionId: me.currentEdition.id,
+              value: response.data,
             })
+
+            me.__selectArticle(me.__findFirstArticle())
+
+            me.setBusy(false)
+          })
         }
       },
 
       __loadEditions() {
-        var me = this
+        const me = this
 
         me.setBusy(true)
 
-        return axios
-          .get('/api/editions?allowUnpublished=1')
-          .then(function(response) {
-            me.setEditions(response.data)
+        return axios.get('/api/editions?allowUnpublished=1').then(function (response) {
+          me.setEditions(response.data)
 
-            me.__selectCurrentOrLastEdition()
-          })
+          me.__selectCurrentOrLastEdition()
+        })
       },
 
       __loadEditorial() {
-        var me = this
+        const me = this
 
-        return axios.get('/api/editorial').then(function(response) {
+        return axios.get('/api/editorial').then(function (response) {
           me.setEditorial(response.data.text)
 
           me.setEditorialCopy(response.data.text)
@@ -145,7 +139,7 @@ if (jQuery('#' + appName).length > 0) {
 
         return axios
           .post('/api/editorial', { editorial: this.editorial })
-          .then(function(response) {
+          .then(function (response) {
             me.__loadEditorial()
           })
       },
@@ -188,11 +182,7 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       __isCurrentArticle(article) {
-        return (
-          article &&
-          this.currentArticle &&
-          article.id === this.currentArticle.id
-        )
+        return article && this.currentArticle && article.id === this.currentArticle.id
       },
 
       __unchanged() {
@@ -212,16 +202,11 @@ if (jQuery('#' + appName).length > 0) {
       },
 
       __photoUnchanged() {
-        return (
-          JSON.stringify(this.currentPhoto) ===
-          JSON.stringify(this.currentPhotoOriginal)
-        )
+        return JSON.stringify(this.currentPhoto) === JSON.stringify(this.currentPhotoOriginal)
       },
 
       __newPhotoUnchanged() {
-        return (
-          JSON.stringify(this.newPhoto) === JSON.stringify(this.cleanNewPhoto)
-        )
+        return JSON.stringify(this.newPhoto) === JSON.stringify(this.cleanNewPhoto)
       },
 
       __updateLead(lead) {
@@ -239,14 +224,14 @@ if (jQuery('#' + appName).length > 0) {
       __refreshMarkdown() {
         const article = this.currentArticle
 
-        let me = this
+        const me = this
 
         axios
           .post('/api/markdown/to/html', {
             lead: article.lead,
             body: article.body,
           })
-          .then(function(response) {
+          .then(function (response) {
             me.__updateLeadHtml(response.data.lead_html)
 
             me.__updateBodyHtml(response.data.body_html)
@@ -280,9 +265,7 @@ if (jQuery('#' + appName).length > 0) {
       __toggleCurrentPublished() {
         const me = this
 
-        const command = this.currentArticle.published_at
-          ? 'unpublish'
-          : 'publish'
+        const command = this.currentArticle.published_at ? 'unpublish' : 'publish'
 
         this.__get(
           '/api/posts/' +
@@ -291,7 +274,7 @@ if (jQuery('#' + appName).length > 0) {
             this.currentArticle.id +
             '/' +
             command,
-        ).then(function() {
+        ).then(function () {
           me.__loadEditions()
         })
       },
@@ -301,11 +284,9 @@ if (jQuery('#' + appName).length > 0) {
 
         const command = !this.currentPhoto.main ? 'setMain' : 'unsetMain'
 
-        this.__get('/api/photos/' + this.currentPhoto.id + '/' + command).then(
-          function() {
-            me.__loadArticles()
-          },
-        )
+        this.__get('/api/photos/' + this.currentPhoto.id + '/' + command).then(function () {
+          me.__loadArticles()
+        })
       },
 
       __toggleCurrentFeatured() {
@@ -317,13 +298,9 @@ if (jQuery('#' + appName).length > 0) {
       __togglePublishedEdition() {
         const me = this
 
-        const command = this.currentEdition.published_at
-          ? 'unpublish'
-          : 'publish'
+        const command = this.currentEdition.published_at ? 'unpublish' : 'publish'
 
-        this.__get(
-          '/api/editions/' + this.currentEdition.id + '/' + command,
-        ).then(function() {
+        this.__get('/api/editions/' + this.currentEdition.id + '/' + command).then(function () {
           me.__loadEditions()
         })
       },
@@ -333,7 +310,7 @@ if (jQuery('#' + appName).length > 0) {
 
         me.setBusy(true)
 
-        return axios.get(url).then(function() {
+        return axios.get(url).then(function () {
           me.setBusy(false)
         })
       },
@@ -341,27 +318,23 @@ if (jQuery('#' + appName).length > 0) {
       __saveCurrent() {
         const me = this
 
-        axios
-          .post('/api/posts/', { article: me.currentArticle })
-          .then(function() {
-            me.__loadArticles()
-          })
+        axios.post('/api/posts/', { article: me.currentArticle }).then(function () {
+          me.__loadArticles()
+        })
       },
 
       __saveCurrentPhoto() {
         const me = this
 
-        axios
-          .post('/api/photos/' + me.currentPhoto.id, me.currentPhoto)
-          .then(function() {
-            me.__loadArticles()
-          })
+        axios.post('/api/photos/' + me.currentPhoto.id, me.currentPhoto).then(function () {
+          me.__loadArticles()
+        })
       },
 
       __moveUp(article) {
         const me = this
 
-        this.__get('/api/posts/' + article.id + '/move-up').then(function() {
+        this.__get('/api/posts/' + article.id + '/move-up').then(function () {
           me.__loadArticles()
         })
       },
@@ -369,7 +342,7 @@ if (jQuery('#' + appName).length > 0) {
       __moveDown(article) {
         const me = this
 
-        this.__get('/api/posts/' + article.id + '/move-down').then(function() {
+        this.__get('/api/posts/' + article.id + '/move-down').then(function () {
           me.__loadArticles()
         })
       },
@@ -389,7 +362,7 @@ if (jQuery('#' + appName).length > 0) {
           return 0
         }
 
-        return articles.reduce(function(a, b) {
+        return articles.reduce(function (a, b) {
           return a.order >= b.order ? a : b
         }).order
       },
@@ -423,7 +396,7 @@ if (jQuery('#' + appName).length > 0) {
           filter = '(?=.*' + split.join(')(?=.*') + ')'
         }
 
-        var filtered = _.filter(this.__currentArticles(), function(item) {
+        var filtered = _.filter(this.__currentArticles(), function (item) {
           for (var key in item) {
             if (unaccent(String(item[key])).match(new RegExp(filter, 'i'))) {
               return true
@@ -440,7 +413,7 @@ if (jQuery('#' + appName).length > 0) {
         var ordered = _.orderBy(
           filtered,
 
-          function(item) {
+          function (item) {
             return item[orderBy] || ''
           },
 
@@ -491,7 +464,7 @@ if (jQuery('#' + appName).length > 0) {
       __createNewEdition() {
         const me = this
 
-        axios.post('/api/editions', this.newEdition).then(function(response) {
+        axios.post('/api/editions', this.newEdition).then(function (response) {
           me.setEditions(response.data)
 
           me.__selectCurrentOrLastEdition(true)
@@ -505,7 +478,7 @@ if (jQuery('#' + appName).length > 0) {
 
         axios
           .post('/api/editions/' + this.newEdition.id, this.newEdition)
-          .then(function(response) {
+          .then(function (response) {
             me.setEditions(response.data)
           })
       },
@@ -517,7 +490,7 @@ if (jQuery('#' + appName).length > 0) {
 
         newPhoto.article_id = this.currentArticle.id
 
-        axios.post('/api/photos/', newPhoto).then(function() {
+        axios.post('/api/photos/', newPhoto).then(function () {
           me.__loadArticles()
 
           me.__clearNewPhoto()
@@ -549,43 +522,43 @@ if (jQuery('#' + appName).length > 0) {
       ...mapGetters(['currentArticles']),
 
       ...mapState({
-        editions: state => state.editions,
+        editions: (state) => state.editions,
 
-        uploads: state => state.uploads,
+        uploads: (state) => state.uploads,
 
-        busy: state => state.busy,
+        busy: (state) => state.busy,
 
-        filter: state => state.filter,
+        filter: (state) => state.filter,
 
-        orderBy: state => state.orderBy,
+        orderBy: (state) => state.orderBy,
 
-        currentEdition: state => state.currentEdition,
+        currentEdition: (state) => state.currentEdition,
 
-        currentUpload: state => state.currentUpload,
+        currentUpload: (state) => state.currentUpload,
 
-        editionArticles: state => state.editionArticles,
+        editionArticles: (state) => state.editionArticles,
 
-        editionArticlesOriginals: state => state.editionArticlesOriginals,
+        editionArticlesOriginals: (state) => state.editionArticlesOriginals,
 
-        newEdition: state => state.newEdition,
+        newEdition: (state) => state.newEdition,
 
-        newPhoto: state => state.newPhoto,
+        newPhoto: (state) => state.newPhoto,
 
-        cleanNewPhoto: state => state.cleanNewPhoto,
+        cleanNewPhoto: (state) => state.cleanNewPhoto,
 
-        iFrameUrl: state => state.iFrameUrl,
+        iFrameUrl: (state) => state.iFrameUrl,
 
-        currentArticle: state => state.currentArticle,
+        currentArticle: (state) => state.currentArticle,
 
-        timeout: state => state.timeout,
+        timeout: (state) => state.timeout,
 
-        currentPhotoId: state => state.currentPhotoId,
+        currentPhotoId: (state) => state.currentPhotoId,
 
-        currentPhoto: state => state.currentPhoto,
+        currentPhoto: (state) => state.currentPhoto,
 
-        currentPhotoOriginal: state => state.currentPhotoOriginal,
+        currentPhotoOriginal: (state) => state.currentPhotoOriginal,
 
-        editorialCopy: state => state.editorialCopy,
+        editorialCopy: (state) => state.editorialCopy,
       }),
 
       editorial: {

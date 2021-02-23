@@ -1,6 +1,6 @@
 <?php
 
-use App\Data\Models\User;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 
 class AddAdministrator extends Migration

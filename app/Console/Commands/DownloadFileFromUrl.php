@@ -47,10 +47,7 @@ class DownloadFileFromUrl extends Command
 
             $fileContent = file_get_contents($url);
 
-            $extension = pathinfo(
-                parse_url($url, PHP_URL_PATH),
-                PATHINFO_EXTENSION
-            );
+            $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
 
             $hash = sha1($fileContent);
 
@@ -61,13 +58,10 @@ class DownloadFileFromUrl extends Command
 
             dump('Downloaded file ' . $fileName . ' from ' . $url);
         } catch (\Exception $exception) {
-            dump(
-                'Exception ' .
-                    basename($exception) .
-                    ' - ' .
-                    $exception->getMessage()
-            );
+            dump('Exception ' . basename($exception) . ' - ' . $exception->getMessage());
             report($exception);
         }
+
+        return 0;
     }
 }

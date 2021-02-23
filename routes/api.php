@@ -4,31 +4,25 @@ use Illuminate\Http\Request;
 use App\Data\Repositories\Photos as PhotosRepository;
 use App\Data\Repositories\Articles as ArticlesRepository;
 use App\Data\Repositories\Editorial as EditorialRepository;
+use App\Http\Controllers\Admin\Articles as AdminArticles;
+use App\Http\Controllers\Admin\UploadedFiles as AdminUploadedFiles;
 
 Route::group(['prefix' => '/editions'], function () {
     Route::get('/', function () {
-        return app(ArticlesRepository::class)->editions(
-            request()->get('allowUnpublished')
-        );
+        return app(ArticlesRepository::class)->editions(request()->get('allowUnpublished'));
     });
 
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::post('/', 'Admin\Articles@store')->name('articles.store');
+        Route::post('/', [AdminArticles::class, 'store'])->name('articles.store');
 
-        Route::post('/{id}', 'Admin\Articles@update')->name('articles.update');
+        Route::post('/{id}', [AdminArticles::class, 'update'])->name('articles.update');
 
         Route::get('/{id}/publish', function ($edition_id) {
-            return app(ArticlesRepository::class)->publishEdition(
-                $edition_id,
-                true
-            );
+            return app(ArticlesRepository::class)->publishEdition($edition_id, true);
         });
 
         Route::get('/{id}/unpublish', function ($edition_id) {
-            return app(ArticlesRepository::class)->publishEdition(
-                $edition_id,
-                false
-            );
+            return app(ArticlesRepository::class)->publishEdition($edition_id, false);
         });
     });
 });
@@ -69,21 +63,15 @@ Route::post('/markdown/to/html', function (Request $request) {
     return [
         'lead' => ($markdown = $request->get('lead')),
         'body' => ($markdown = $request->get('body')),
-        'lead_html' => app(App\Services\Markdown\Service::class)->convert(
-            $request->get('lead')
-        ),
-        'body_html' => app(App\Services\Markdown\Service::class)->convert(
-            $request->get('body')
-        )
+        'lead_html' => app(App\Services\Markdown\Service::class)->convert($request->get('lead')),
+        'body_html' => app(App\Services\Markdown\Service::class)->convert($request->get('body')),
     ];
 });
 
 Route::group(['prefix' => '/posts'], function () {
     Route::post('/', function (Request $request) {
         info('posting');
-        return app(ArticlesRepository::class)->createOrUpdate(
-            $request->get('article')
-        );
+        return app(ArticlesRepository::class)->createOrUpdate($request->get('article'));
     });
 
     Route::get('/{post_id}/move-up', function (Request $request, $post_id) {
@@ -124,11 +112,9 @@ Route::group(['prefix' => '/editorial'], function () {
 });
 
 Route::group(['prefix' => '/uploaded-files'], function () {
-    Route::get('/', 'Admin\UploadedFiles@all')->name('uploaded-files.all');
+    Route::get('/', [AdminUploadedFiles::class, 'all'])->name('uploaded-files.all');
 
-    Route::post('/{id}', 'Admin\UploadedFiles@update')->name(
-        'uploaded-files.update'
-    );
+    Route::post('/{id}', [AdminUploadedFiles::class, 'update'])->name('uploaded-files.update');
 
-    Route::post('/', 'Admin\UploadedFiles@store')->name('uploaded-files.store');
+    Route::post('/', [AdminUploadedFiles::class, 'store'])->name('uploaded-files.store');
 });

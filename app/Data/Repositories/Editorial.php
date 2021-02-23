@@ -3,7 +3,7 @@
 namespace App\Data\Repositories;
 
 use App\Services\Markdown\Service as Markdown;
-use App\Data\Models\Editorial as EditorialModel;
+use App\Models\Editorial as EditorialModel;
 
 class Editorial
 {

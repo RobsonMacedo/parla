@@ -1,5 +1,3 @@
-require('./helpers')
-
 window._ = require('lodash')
 
 /**
@@ -9,36 +7,49 @@ window._ = require('lodash')
  */
 
 try {
+  window.Popper = require('popper.js').default
   window.$ = window.jQuery = require('jquery')
 
-  require('autogrow')
-
-  require('bootstrap-sass')
+  require('bootstrap')
 } catch (e) {}
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = require('axios')
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
 
 /**
  * Vue
  */
 
-window.Vue = require('vue')
+import Vue from 'vue'
 
 /**
  * Autoload Vue components
  */
 const file = require.context('./components/app/', true, /\.vue$/i)
-file.keys().map(file => {
+file.keys().map((file) => {
   const name = 'App' + _.last(file.split('/')).split('.')[0]
 
-  return window.Vue.component(name, () =>
-    import('./components/app/' + basename(file)),
-  )
+  return Vue.component(name, () => import('./components/app/' + basename(file)))
 })
 
 /**
  * Vue Clipboard
  */
 import VueClipboard from 'vue-clipboard2'
-window.Vue.use(VueClipboard)
+Vue.use(VueClipboard)
 
 /**
  * Vue SweetAlert
@@ -46,7 +57,7 @@ window.Vue.use(VueClipboard)
 import VueSweetalert2 from 'vue-sweetalert2'
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css'
-window.Vue.use(VueSweetalert2)
+Vue.use(VueSweetalert2)
 
 /**
  * Vue Pagination
@@ -55,7 +66,7 @@ import Paginate from 'vuejs-paginate'
 Vue.component('paginate', Paginate)
 
 // import Pagination from 'vue-pagination-2'
-// window.Vue.component('pagination', Pagination)
+// Vue.component('pagination', Pagination)
 
 /**
  * Lightbox 2
@@ -90,16 +101,14 @@ let token = document.head.querySelector('meta[name="csrf-token"]')
 if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content
 } else {
-  console.error(
-    'CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token',
-  )
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token')
 }
 
 /**
  * UUID v4
  */
 
-window.uuidv4 = require('uuid/v4')
+//window.uuidv4 = require('uuid/v4')
 
 require('./store/adminStore')
 

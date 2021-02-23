@@ -1,11 +1,13 @@
 <?php
-namespace App\Data\Models;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Date\Date;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Edition extends BaseModel
 {
+    use HasFactory;
+
     protected $fillable = ['year', 'month', 'number', 'published_at'];
 
     protected $appends = ['month_name'];
@@ -17,8 +19,6 @@ class Edition extends BaseModel
 
     public function getMonthNameAttribute()
     {
-        return Date::parse(
-            sprintf('%s-%s-%s', $this->year, $this->month, 1)
-        )->format('F');
+        return Date::parse(sprintf('%s-%s-%s', $this->year, $this->month, 1))->format('F');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Data\Models\Edition;
+use App\Models\Edition;
 use App\Data\Repositories\Articles;
 use App\Data\Repositories\Articles as ArticlesRepository;
 use App\Data\Repositories\Editorial;

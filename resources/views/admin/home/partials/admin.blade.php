@@ -15,10 +15,6 @@
                                 <span v-if="!__currentEditionIsPublished()">Publicar</span>
                                 <span v-if="__currentEditionIsPublished()">Publicado</span>
                             </button>
-
-                            <button class="pull-right btn btn-sm btn-primary" @click="__backup()">
-                                Backup
-                            </button>
                         </div>
                     </div>
                 </div>
