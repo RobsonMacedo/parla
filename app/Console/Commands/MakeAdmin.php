@@ -45,5 +45,6 @@ class MakeAdmin extends Command
         } else {
             $this->info('User not found');
         }
+        return 0;
     }
 }

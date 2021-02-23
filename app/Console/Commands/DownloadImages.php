@@ -50,10 +50,7 @@ class DownloadImages extends Command
 
                     $image = file_get_contents($url);
 
-                    $extension = pathinfo(
-                        parse_url($url, PHP_URL_PATH),
-                        PATHINFO_EXTENSION
-                    );
+                    $extension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
 
                     $hash = sha1($image);
 
@@ -64,21 +61,17 @@ class DownloadImages extends Command
 
                     dump('Downloaded image ' . $fileName . ' from ' . $url);
 
-                    $articlePhoto->{'url_' . $res . 'res'} = \Storage::disk(
-                        'public'
-                    )->url($fileName);
+                    $articlePhoto->{'url_' . $res . 'res'} = \Storage::disk('public')->url(
+                        $fileName
+                    );
 
                     $articlePhoto->save();
                 } catch (\Exception $exception) {
-                    dump(
-                        'Exception ' .
-                            basename($exception) .
-                            ' - ' .
-                            $exception->getMessage()
-                    );
+                    dump('Exception ' . basename($exception) . ' - ' . $exception->getMessage());
                     report($exception);
                 }
             }
         }
+        return 0;
     }
 }
