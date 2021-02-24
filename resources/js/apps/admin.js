@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 const appName = 'vue-admin'
 import { mapMutations } from 'vuex'
 import { mapState } from 'vuex'
