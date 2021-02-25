@@ -15,7 +15,6 @@
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "bootstrap": "^4.6.0",
         "cross-env": "^7.0.3",
-        "font-awesome": "^4.7.0",
         "fullcalendar": "^5.5.1",
         "jquery": "^3.5",
         "laravel-mix": "^6.0.11",
@@ -33,6 +32,7 @@
         "webpack-livereload-plugin": "^3.0.0"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.2",
         "clean-webpack-plugin": "^3.0.0",
         "uuid": "^8.3.2",
         "vue-clipboard2": "^0.3.1",
