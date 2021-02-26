@@ -1,67 +1,48 @@
-{{--
-<nav class="flex items-center justify-between flex-wrap bg-red-dark p-6">
-    <div class="flex items-center flex-no-shrink text-white mr-6">
-                    <span class="text-3xl tracking-tight">
-                        <title>{{ config('app.name') }}</title>
-                    </span>
-    </div>
-</nav>
---}}
 
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-default">
     <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            {{--<a class="navbar-brand" href="#">Project name</a>--}}
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">Capa</a></li>
-                {{--<li><a href="#">Outras Edições</a></li>--}}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Outras Edições <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li v-for="edition in editions">
-                            <a :href="'/editions/'+edition.number">Edição nº@{{ edition.number }} - @{{ edition.month_name }} de @{{ edition.year }}</a>
-                        </li>
-                    </ul>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+
+                <li class="nav-item {{ Request::is('/') ? 'active' : '' }}">
+                    <a class="nav-link" href="/">Capa <span class="sr-only">(current)</span></a>
                 </li>
-                {{--<li class="{{ Request::is('contact') ? 'active' : '' }}">
-                    <a href="/contact">Fale Conosco</a>
-                </li>--}}
-            </ul>
 
-            <ul class="nav navbar-nav navbar-right">
-                {{--<li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
-                <li><a href="../navbar-static-top/">Static top</a></li>
-                <li><a href="../navbar-fixed-top/">Fixed top</a></li>--}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Outras Edições
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <span v-for="edition in editions">
+                            <a class="dropdown-item" :href="'/editions/'+edition.number">Edição nº@{{ edition.number }} - @{{ edition.month_name }} de @{{ edition.year }}
+                            </a>
+                        </span>
 
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input
-                            type="text"
-                            class="form-control pull-right nav-search"
-                            placeholder="Procurar"
-                            v-model="search"
-                        >
-						<span class="input-group-btn">
-							<button type="submit" class="btn btn-default">
-								<span class="glyphicon glyphicon-search">
-									<span class="sr-only">Procurar</span>
-								</span>
-                            </button>
-						</span>
                     </div>
-                </form>
+                </li>
 
             </ul>
-        </div><!--/.nav-collapse -->
-    </div><!--/.container-fluid -->
-</nav>
+            <form class="form-inline my-2 my-lg-0">
 
+                <div class="input-group">
+                    <input class="form-control mr-sm-2 nav-search" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <div class="input-group-text" id="btnGroupAddon"><i class="fas fa-search"></i></div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</nav>
