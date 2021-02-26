@@ -1,12 +1,12 @@
 <footer class="footer">
     <div class="container">
-        <div class="row d-flex align-items-center ">
-            <div class="footer-01 col-md-3">
+        <div class="row d-flex align-items-center mt-4">
+            <div class="footer-01 col-md-4 pl-4 pl-5">
                 <img src="/images/parla_horizontal_fundoescuro.svg">
                 <p class="publication-name">Publicação da Subdiretoria-Geral de Comunicação Social da Assembleia Legislativa do Estado do Rio de Janeiro
                 </p>
             </div>
-            <div class="col-md-9 expediente">
+            <div class="col-md-8 expediente">
                 {!! $editorial ?? '' !!}
             </div>
         </div>
@@ -22,7 +22,7 @@
             </div>
             <div class="col-12 col-sm-4 col-md-8 text-white">
                 <div class="row mt-4">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 endereco">
                         <p>Rua Primeiro de março, s/n<br>
                             Praça XV - Rio de Janeiro<br>
                             <span>CEP</span> 20010-090 &nbsp;&nbsp; <span class="telefone">+55 (21) 2588-1000</span>

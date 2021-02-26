@@ -20,6 +20,19 @@
         }
       }
 
+      &.dropdown {
+
+        &:focus {
+          background-color: #aab661
+        }
+        &:hover {
+          background-color: #aab661
+        }
+        &:active {
+          background-color: #aab661;
+        }
+      }
+
       .nav-link {
         padding-top: 1rem;
         padding-bottom: 1rem;
