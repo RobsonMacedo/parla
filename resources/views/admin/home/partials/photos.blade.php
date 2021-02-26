@@ -24,7 +24,7 @@
                             <ul class="list-group">
                                 <li v-for="photo in __orderedPhotos()" @click="__selectPhoto(photo)" :class="'list-group-item cursor-pointer bg-info ' + (currentPhotoId == photo.id ? 'active' : '')">
                                     <div class="row">
-                                        <div class="col-xs-12">
+                                        <div class="col-12">
                                             @{{ photo.author }} (id @{{ photo.id }})
                                         </div>
                                     </div>

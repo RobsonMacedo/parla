@@ -7,10 +7,10 @@
         <div class="modal-body">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Parla número</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.number"
@@ -23,10 +23,10 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Ano</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.year"
@@ -39,10 +39,10 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Mês</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.month"
