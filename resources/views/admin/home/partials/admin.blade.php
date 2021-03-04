@@ -86,9 +86,9 @@
 
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <span class="input-group-addon" :class="filter ? 'danger' : ''">
-                                            @{{ filter ? 'Filtrado' : 'Filtrar' }}
-                                        </span>
+                                        <div class="input-group-prepend" :class="filter ? 'danger' : ''">
+                                            <span class="input-group-text">@{{ filter ? 'Filtrado' : 'Filtrar' }}</span>
+                                        </div>
 
                                         <input
                                                 type="text"
@@ -97,9 +97,9 @@
                                                 class="form-control"
                                         >
 
-                                        <span class="input-group-addon" :class="filter ? ' danger pointer' : ''" @click="__clearFilter()">
-                                            <i :class="filter ? 'fa fa-times' : 'fa fa-search'"></i>
-                                        </span>
+                                        <div class="input-group-append" :class="filter ? ' danger pointer' : ''" @click="__clearFilter()">
+                                            <span class="input-group-text"><i :class="filter ? 'fa fa-times' : 'fa fa-search'"></i></span>
+                                        </div>
                                     </div>
                                 </div>
 

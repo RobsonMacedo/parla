@@ -9,19 +9,16 @@ body {
 
 .nav-tabs {
   .nav-link {
-    &:active {
+    &.active {
       background-color: #f5f8fa;
+      border-color: #dee2e6 #dee2e6 #F5F8FB;
     }
   }
 
 }
 
 
-.nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
-  background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
-}
+
 
 
 

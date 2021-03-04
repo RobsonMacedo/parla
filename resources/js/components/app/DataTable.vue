@@ -36,16 +36,16 @@
                       "
                     >
                       <div class="row">
-                        <div class="col-xs-8">
+                        <div class="col-9">
                           <i class="fa fa-file"></i>
                           {{ upload.original_name }}
                         </div>
 
-                        <div class="col-xs-4 text-right">
+                        <div class="col-3 text-right">
                           <div class="row">
-                            <div class="col-xs-3"></div>
+                            <div class="col-3"></div>
 
-                            <div class="col-xs-9 pull-right">
+                            <div class="col-9 pull-right">
                               <button
                                 type="button"
                                 class="pull-right btn btn-sm btn-primary"
@@ -69,10 +69,15 @@
                     :click-handler="clickCallback"
                     :prev-text="'<<'"
                     :next-text="'>>'"
-                    :container-class="'pagination'"
-                    :page-class="'page-item'"
+                    :container-class="'pagination pagination-sm justify-content-center mt-4'"
+                    :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'"
+                    :page-link-class="'page-link'" :prev-link-class="'page-link'" :next-link-class="'page-link'"
                   >
                   </paginate>
+
+
+
+
                 </div>
               </div>
             </div>
