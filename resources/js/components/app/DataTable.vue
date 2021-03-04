@@ -86,8 +86,8 @@
       </div>
 
       <div v-if="current" class="col-md-9">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card">
+          <div class="card-header">
             <div class="row">
               <div class="col-md-12">
                 <div class="text-left">
@@ -101,11 +101,11 @@
             </div>
           </div>
 
-          <div class="panel-body scrollable">
+          <div class="card-body scrollable">
             <div class="row">
               <div class="col-md-12">
                 <img
-                  class="preview-panel"
+                  class="preview-panel img-fluid"
                   :src="current.url"
                   alt="Error loading"
                 />
