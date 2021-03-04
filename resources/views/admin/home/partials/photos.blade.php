@@ -2,14 +2,14 @@
 
 <div class="row" v-if="currentArticle && currentArticle.photos">
     <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="btn-toolbar">
                             @{{ !currentArticle ? 0 : currentArticle.photos.length }} fotos
 
-                            <div class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target="#add-photo-modal">
+                            <div class="btn btn-danger btn-sm ml-auto" data-toggle="modal" data-target="#add-photo-modal">
                                 <i class="fa fa-plus"></i>
                             </div>
                         </div>
@@ -17,12 +17,12 @@
                 </div>
             </div>
 
-            <div class="panel-body scrollable">
+            <div class="scrollable">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="div">
                             <ul class="list-group">
-                                <li v-for="photo in __orderedPhotos()" @click="__selectPhoto(photo)" :class="'list-group-item cursor-pointer bg-info ' + (currentPhotoId == photo.id ? 'active' : '')">
+                                <li v-for="photo in __orderedPhotos()" @click="__selectPhoto(photo)" :class="'list-group-item cursor-pointer ' + (currentPhotoId == photo.id ? 'active' : '')">
                                     <div class="row">
                                         <div class="col-12">
                                             @{{ photo.author }} (id @{{ photo.id }})
