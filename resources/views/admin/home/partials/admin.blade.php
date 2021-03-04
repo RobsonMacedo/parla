@@ -1,31 +1,42 @@
 <div class="row">
     <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+
+        <div class="card">
+            <div class="card-header">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="btn-toolbar">
+                        <div class="btn-toolbar d-flex">
                             @{{ editions.length }} edições
 
-                            <div class="btn btn-danger btn-sm pull-right" data-toggle="modal" @click="__clearNewEdition()" data-target="#add-edition-modal">
-                                <i class="fa fa-plus"></i>
+
+                            <div class="buttons-panel ml-auto">
+                                <div class="btn btn-danger btn-danger mr-2" data-toggle="modal" @click="__clearNewEdition()" data-target="#add-edition-modal">
+                                    <i class="fa fa-plus"></i>
+                                </div>
+
+                                <button :class="'pull-right btn btn-primary ' + (__currentEditionIsPublished() ? 'btn-success' : 'btn-default')" @click="__togglePublishedEdition()">
+                                    <span v-if="!__currentEditionIsPublished()">Publicar</span>
+                                    <span v-if="__currentEditionIsPublished()">Publicado</span>
+                                </button>
+
                             </div>
 
-                            <button :class="'pull-right btn btn-sm ' + (__currentEditionIsPublished() ? 'btn-success' : 'btn-default')" @click="__togglePublishedEdition()">
-                                <span v-if="!__currentEditionIsPublished()">Publicar</span>
-                                <span v-if="__currentEditionIsPublished()">Publicado</span>
-                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="panel-body scrollable">
+            <div class="card-body scrollable">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="div">
+
+
+
+
                             <ul class="list-group">
-                                <li v-for="edition in __filteredEditions()" @click="busy ? false : __selectEdition(edition, true)" :class="'list-group-item cursor-pointer bg-info ' + (currentEdition && currentEdition.id == edition.id ? 'active' : '')">
+
+                                <li v-for="edition in __filteredEditions()" @click="busy ? false : __selectEdition(edition, true)" :class="'list-group-item cursor-pointer ' + (currentEdition && currentEdition.id == edition.id ? 'active' : '')">
                                     <div class="row">
                                         <div class="col-8">
                                             <span v-if="edition.published_at"><i class="fa fa-check"></i></span>
@@ -51,6 +62,7 @@
                                         </div>
                                     </div>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -70,7 +82,7 @@
                                     <div class="btn btn-info" @click="__createArticle()">
                                         Novo Post
                                     </div>
-                                &nbsp;</div>
+                                    &nbsp;</div>
 
                                 <div class="col-md-8">
                                     <div class="input-group">
@@ -79,10 +91,10 @@
                                         </span>
 
                                         <input
-                                            type="text"
-                                            :value="filter"
-                                            @input="setFilter"
-                                            class="form-control"
+                                                type="text"
+                                                :value="filter"
+                                                @input="setFilter"
+                                                class="form-control"
                                         >
 
                                         <span class="input-group-addon" :class="filter ? ' danger pointer' : ''" @click="__clearFilter()">
@@ -107,72 +119,72 @@
                     <div class="col-md-12">
                         <table class="table table-striped table-hover">
                             <thead>
-                                <tr>
-                                    <th @click="__changeOrder('order')">
-                                    </th>
+                            <tr>
+                                <th @click="__changeOrder('order')">
+                                </th>
 
-                                    <th @click="__changeOrder('order')">
-                                        Posição
+                                <th @click="__changeOrder('order')">
+                                    Posição
 
-                                        <div v-show="orderBy == 'order'" class="btn btn-danger btn-xs">
-                                            <i class="fa" :class="__getArrowClass()"></i>
-                                        </div>
-                                    </th>
+                                    <div v-show="orderBy == 'order'" class="btn btn-danger btn-xs">
+                                        <i class="fa" :class="__getArrowClass()"></i>
+                                    </div>
+                                </th>
 
-                                    <th @click="__changeOrder('title')" class="">
-                                        Titulo
+                                <th @click="__changeOrder('title')" class="">
+                                    Titulo
 
-                                        <div v-show="orderBy == 'title'" class="btn btn-danger btn-xs">
-                                            <i class="fa" :class="__getArrowClass()"></i>
-                                        </div>
-                                    </th>
+                                    <div v-show="orderBy == 'title'" class="btn btn-danger btn-xs">
+                                        <i class="fa" :class="__getArrowClass()"></i>
+                                    </div>
+                                </th>
 
-                                    <th @click="__changeOrder('category')">
-                                        Categoria
+                                <th @click="__changeOrder('category')">
+                                    Categoria
 
-                                        <div v-show="orderBy == 'category'" class="btn btn-danger btn-xs">
-                                            <i class="fa" :class="__getArrowClass()"></i>
-                                        </div>
-                                    </th>
+                                    <div v-show="orderBy == 'category'" class="btn btn-danger btn-xs">
+                                        <i class="fa" :class="__getArrowClass()"></i>
+                                    </div>
+                                </th>
 
-                                    <th @click="__changeOrder('featured')">
-                                        Destaque
+                                <th @click="__changeOrder('featured')">
+                                    Destaque
 
-                                        <div v-show="orderBy == 'featured'" class="btn btn-danger btn-xs">
-                                            <i class="fa" :class="__getArrowClass()"></i>
-                                        </div>
-                                    </th>
+                                    <div v-show="orderBy == 'featured'" class="btn btn-danger btn-xs">
+                                        <i class="fa" :class="__getArrowClass()"></i>
+                                    </div>
+                                </th>
 
-                                    <th @click="__changeOrder('published_at')">
-                                        Visível
+                                <th @click="__changeOrder('published_at')">
+                                    Visível
 
-                                        <div v-show="orderBy == 'published_at'" class="btn btn-danger btn-xs">
-                                            <i class="fa" :class="__getArrowClass()"></i>
-                                        </div>
-                                    </th>
-                                </tr>
+                                    <div v-show="orderBy == 'published_at'" class="btn btn-danger btn-xs">
+                                        <i class="fa" :class="__getArrowClass()"></i>
+                                    </div>
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(article, index) in __filteredArticles()" class="clickable" @click="__selectArticle(article)">
-                                    <td>
-                                        <div v-show="__isCurrentArticle(article)" class="btn btn-danger btn-xs">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </div>
-                                    </td>
+                            <tr v-for="(article, index) in __filteredArticles()" class="clickable" @click="__selectArticle(article)">
+                                <td>
+                                    <div v-show="__isCurrentArticle(article)" class="btn btn-danger btn-xs">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </td>
 
-                                    <td>
-                                        <span :class="'fa fa-arrow-up ' + (__canMoveUp(article) ? 'order-arrow cursor-pointer' : 'order-arrow-disabled')" @click="__moveUp(article)"></span>
+                                <td>
+                                    <span :class="'fa fa-arrow-up ' + (__canMoveUp(article) ? 'order-arrow cursor-pointer' : 'order-arrow-disabled')" @click="__moveUp(article)"></span>
 
-                                        @{{ article.order }}
+                                    @{{ article.order }}
 
-                                        <span :class="'fa fa-arrow-down ' + (__canMoveDown(article) ? 'order-arrow cursor-pointer' : 'order-arrow-disabled')" @click="__moveDown(article)"></span>
-                                    </td>
+                                    <span :class="'fa fa-arrow-down ' + (__canMoveDown(article) ? 'order-arrow cursor-pointer' : 'order-arrow-disabled')" @click="__moveDown(article)"></span>
+                                </td>
 
-                                    <td>@{{ article.title ? article.title : 'NOVO POST' }}</td>
-                                    <td>@{{ article.category }}</td>
-                                    <td>@{{ article.featured ? 'sim' : 'não' }}</td>
-                                    <td>@{{ article.published_at ? 'sim' : 'não' }}</td>
-                                </tr>
+                                <td>@{{ article.title ? article.title : 'NOVO POST' }}</td>
+                                <td>@{{ article.category }}</td>
+                                <td>@{{ article.featured ? 'sim' : 'não' }}</td>
+                                <td>@{{ article.published_at ? 'sim' : 'não' }}</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -230,10 +242,10 @@
                             <label class="col-sm-3 control-label" for="photo-author">Autor</label>
                             <div class="col-sm-9">
                                 <input
-                                    class="form-control"
-                                    id="photo-author"
-                                    :value="newPhoto.author"
-                                    @input="setNewPhotoAuthor($event.target.value)"
+                                        class="form-control"
+                                        id="photo-author"
+                                        :value="newPhoto.author"
+                                        @input="setNewPhotoAuthor($event.target.value)"
                                 />
                             </div>
                         </div>
@@ -242,10 +254,10 @@
                             <label class="col-sm-3 control-label" for="photo-high">Foto em alta</label>
                             <div class="col-sm-9">
                                 <input
-                                    class="form-control"
-                                    id="photo-high"
-                                    :value="newPhoto.url_highres"
-                                    @input="setNewPhotoUrlHighres($event.target.value)"
+                                        class="form-control"
+                                        id="photo-high"
+                                        :value="newPhoto.url_highres"
+                                        @input="setNewPhotoUrlHighres($event.target.value)"
                                 />
                             </div>
                         </div>
@@ -254,10 +266,10 @@
                             <label class="col-sm-3 control-label" for="photo-low">Foto em baixa</label>
                             <div class="col-sm-9">
                                 <input
-                                    class="form-control"
-                                    id="photo-low"
-                                    :value="newPhoto.url_lowres"
-                                    @input="setNewPhotoUrlLowres($event.target.value)"
+                                        class="form-control"
+                                        id="photo-low"
+                                        :value="newPhoto.url_lowres"
+                                        @input="setNewPhotoUrlLowres($event.target.value)"
                                 />
                             </div>
                         </div>
@@ -266,10 +278,10 @@
                             <label class="col-sm-3 control-label" for="photo-notes">Legenda</label>
                             <div class="col-sm-9">
                                 <input
-                                    class="form-control"
-                                    id="photo-notes"
-                                    :value="newPhoto.notes"
-                                    @input="setNewPhotoNotes($event.target.value)"
+                                        class="form-control"
+                                        id="photo-notes"
+                                        :value="newPhoto.notes"
+                                        @input="setNewPhotoNotes($event.target.value)"
                                 />
                             </div>
                         </div>
