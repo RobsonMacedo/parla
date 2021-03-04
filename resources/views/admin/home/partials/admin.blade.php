@@ -126,7 +126,7 @@
                                 <th @click="__changeOrder('order')">
                                     Posição
 
-                                    <div v-show="orderBy == 'order'" class="btn btn-danger btn-xs">
+                                    <div v-show="orderBy == 'order'" class="btn btn-danger btn-sm">
                                         <i class="fa" :class="__getArrowClass()"></i>
                                     </div>
                                 </th>
@@ -134,7 +134,7 @@
                                 <th @click="__changeOrder('title')" class="">
                                     Titulo
 
-                                    <div v-show="orderBy == 'title'" class="btn btn-danger btn-xs">
+                                    <div v-show="orderBy == 'title'" class="btn btn-danger btn-sm">
                                         <i class="fa" :class="__getArrowClass()"></i>
                                     </div>
                                 </th>
@@ -142,7 +142,7 @@
                                 <th @click="__changeOrder('category')">
                                     Categoria
 
-                                    <div v-show="orderBy == 'category'" class="btn btn-danger btn-xs">
+                                    <div v-show="orderBy == 'category'" class="btn btn-danger btn-sm">
                                         <i class="fa" :class="__getArrowClass()"></i>
                                     </div>
                                 </th>
@@ -150,7 +150,7 @@
                                 <th @click="__changeOrder('featured')">
                                     Destaque
 
-                                    <div v-show="orderBy == 'featured'" class="btn btn-danger btn-xs">
+                                    <div v-show="orderBy == 'featured'" class="btn btn-danger btn-sm">
                                         <i class="fa" :class="__getArrowClass()"></i>
                                     </div>
                                 </th>
@@ -158,7 +158,7 @@
                                 <th @click="__changeOrder('published_at')">
                                     Visível
 
-                                    <div v-show="orderBy == 'published_at'" class="btn btn-danger btn-xs">
+                                    <div v-show="orderBy == 'published_at'" class="btn btn-danger btn-sm">
                                         <i class="fa" :class="__getArrowClass()"></i>
                                     </div>
                                 </th>
@@ -167,7 +167,7 @@
                             <tbody>
                             <tr v-for="(article, index) in __filteredArticles()" class="clickable" @click="__selectArticle(article)">
                                 <td>
-                                    <div v-show="__isCurrentArticle(article)" class="btn btn-danger btn-xs">
+                                    <div v-show="__isCurrentArticle(article)" class="btn btn-danger btn-sm">
                                         <i class="fa fa-arrow-right"></i>
                                     </div>
                                 </td>
