@@ -8,8 +8,46 @@
     </style>
 
     <div class="container-fluid" id="vue-admin" >
+
         <div v-cloak>
             <!-- Nav tabs -->
+            <ul class="nav nav-tabs mt-4" role="tablist">
+                <li
+                        role="presentation"
+                        class=" nav-item"
+                        @click="__selectAdminPane()"
+                >
+                    <a class="active nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab">Admin</a>
+                </li>
+                <li
+                        class="nav-item"
+                        role="presentation"
+                        @click="__selectPreviewPane()"
+                >
+                    <a class="nav-link"  href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Preview</a>
+                </li>
+                <li
+                        class="nav-item"
+                        role="presentation"
+                        @click="__selectEditorialPane()"
+                >
+                    <a class="nav-link"  href="#editorial" aria-controls="profile" role="tab" data-toggle="tab">Expediente</a>
+                </li>
+                <li
+                        class="nav-item"
+                        role="presentation"
+                        @click="__selectUploadsPane()"
+                >
+                    <a class="nav-link"  href="#uploads" aria-controls="profile" role="tab" data-toggle="tab">Uploads</a>
+                </li>
+            </ul>
+            <!-- END Nav tabs -->
+
+
+
+            <!-- OLD Nav tabs -->
+{{--
+
             <ul class="nav nav-tabs" role="tablist">
                 <li
                     role="presentation"
@@ -40,6 +78,7 @@
                     <a href="#uploads" aria-controls="profile" role="tab" data-toggle="tab">Uploads</a>
                 </li>
             </ul>
+--}}
 
             <!-- Tab panes -->
             <div class="tab-content">
