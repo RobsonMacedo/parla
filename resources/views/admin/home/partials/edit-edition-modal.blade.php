@@ -56,9 +56,9 @@
 
         <div class="modal-footer">
             @if ($mode == 'create')
-                <button type="button" class="btn btn-default" data-dismiss="modal" @click="__createNewEdition()">Criar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="__createNewEdition()">Criar</button>
             @else
-                <button type="button" class="btn btn-default" data-dismiss="modal" @click="__updateNewEdition()">Gravar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="__updateNewEdition()">Gravar</button>
             @endif
 
             <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>

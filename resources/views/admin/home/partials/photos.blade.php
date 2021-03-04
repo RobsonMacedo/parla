@@ -47,7 +47,7 @@
 
                     <div class="col-md-4">
                         <div class="text-right">
-                            <button :class="'btn ' + (currentPhoto.main ? 'btn-success' : 'btn-default')" @click="__toggleCurrentPhotoMain()">
+                            <button :class="'btn ' + (currentPhoto.main ? 'btn-success' : 'btn-primary')" @click="__toggleCurrentPhotoMain()">
                                 <span v-if="currentPhoto.main">Esta é a principal</span>
                                 <span v-if="!currentPhoto.main">Marcar como principal</span>
                             </button>

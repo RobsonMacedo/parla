@@ -14,7 +14,7 @@
                                     <i class="fa fa-plus"></i>
                                 </div>
 
-                                <button :class="'pull-right btn btn-primary ' + (__currentEditionIsPublished() ? 'btn-success' : 'btn-default')" @click="__togglePublishedEdition()">
+                                <button :class="'pull-right btn btn-primary ' + (__currentEditionIsPublished() ? 'btn-success' : 'btn-primary')" @click="__togglePublishedEdition()">
                                     <span v-if="!__currentEditionIsPublished()">Publicar</span>
                                     <span v-if="__currentEditionIsPublished()">Publicado</span>
                                 </button>
@@ -291,7 +291,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" @click="__createNewPhoto()" :disabled="__newPhotoUnchanged()">Gravar</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="__createNewPhoto()" :disabled="__newPhotoUnchanged()">Gravar</button>
                     <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

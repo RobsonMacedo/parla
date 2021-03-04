@@ -8,7 +8,7 @@
                 <br><br>
                 <h2 class="text-center">{{ __('Login') }}</h2>
 
-                <div class="card-body bg-info p-30">
+                <div class="card-body p-30">
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 
