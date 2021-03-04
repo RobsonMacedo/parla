@@ -38,8 +38,8 @@
     </div>
 
     <div class="col-md-9" v-if="currentPhoto">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <div class="row">
                     <h4 class="col-md-8">
                         <span>Fotografia @{{ currentPhoto.id }}</span>
@@ -60,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="panel-body add-margin">
+            <div class="card-body add-margin">
                 <div class="row">
                     <div class="col-md-12">
                         <form @submit.prevent>
