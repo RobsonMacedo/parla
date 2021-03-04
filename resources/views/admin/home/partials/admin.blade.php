@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="card-body scrollable">
+            <div class="scrollable">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="div">

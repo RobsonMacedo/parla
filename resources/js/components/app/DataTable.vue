@@ -21,7 +21,7 @@
             </div>
           </div>
 
-          <div class="card-body scrollable">
+          <div class="scrollable">
             <div class="row">
               <div class="col-md-12">
                 <div class="div">
@@ -45,7 +45,7 @@
                           <div class="row">
                             <div class="col-3"></div>
 
-                            <div class="col-9 pull-right">
+                            <div class="col-9 ml-auto">
                               <button
                                 type="button"
                                 class="pull-right btn btn-sm btn-primary"

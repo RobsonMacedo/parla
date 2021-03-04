@@ -18,6 +18,25 @@ body {
 }
 
 
+.card {
+  .list-group-item {
+    border-left: 0px;
+    border-right: 0px;
+
+    &:first-child {
+      border-top: 0px;
+    }
+    &:last-child {
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+  }
+
+  .table {
+    margin-bottom: 0px;
+  }
+}
+
 
 
 
