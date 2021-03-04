@@ -26,7 +26,7 @@
 
         <link rel="stylesheet" type="text/css" href="{{ mix('/css/app.css') }}">
         <link href='//fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,500,500italic,700,700italic' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/get_route(/css/font-awesome.min.css">
 
         @if (request()->get('client') == 'app')
             <link rel="stylesheet" href="/css/client-app.css">
