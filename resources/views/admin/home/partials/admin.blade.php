@@ -72,8 +72,8 @@
     </div>
 
     <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card">
+            <div class="card-header">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="text-left">
@@ -194,16 +194,18 @@
     </div>
 </div>
 
-<div class="row" v-if="currentArticle">
+<div class="row mt-4" v-if="currentArticle">
     <div class="col-md-12">
+
+
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-                <a href="#postPane" aria-controls="home" role="tab" data-toggle="tab">Post</a>
+            <li role="presentation" class="nav-item">
+                <a class="nav-link active" href="#postPane" aria-controls="home" role="tab" data-toggle="tab">Post</a>
             </li>
 
-            <li role="presentation">
-                <a href="#photosPane" aria-controls="profile" role="tab" data-toggle="tab">Fotos</a>
+            <li role="presentation" class="nav-item">
+                <a class="nav-link" href="#photosPane" aria-controls="profile" role="tab" data-toggle="tab">Fotos</a>
             </li>
         </ul>
 

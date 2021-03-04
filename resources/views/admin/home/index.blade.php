@@ -14,7 +14,7 @@
             <ul class="nav nav-tabs mt-4" role="tablist">
                 <li
                         role="presentation"
-                        class=" nav-item"
+                        class="nav-item"
                         @click="__selectAdminPane()"
                 >
                     <a class="active nav-link" href="#home" aria-controls="home" role="tab" data-toggle="tab">Admin</a>
