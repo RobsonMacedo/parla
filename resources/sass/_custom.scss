@@ -1,3 +1,31 @@
+body {
+  font-family: Open Sans,sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #636b6f;
+  background-color: #f5f8fa;
+}
+
+
+.nav-tabs {
+  .nav-link {
+    &:active {
+      background-color: #f5f8fa;
+    }
+  }
+
+}
+
+
+.nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+
+
+
+
 .order-arrow {
   color: #d3d3d3;
 }

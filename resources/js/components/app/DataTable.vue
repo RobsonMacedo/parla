@@ -2,15 +2,15 @@
   <div>
     <div class="row">
       <div class="col-md-3">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card">
+          <div class="card-header">
             <div class="row">
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   {{ getDataLength() }} uploads
 
                   <div
-                    class="btn btn-danger btn-sm pull-right"
+                    class="btn btn-danger btn-sm ml-auto"
                     data-toggle="modal"
                     data-target="#upload-modal"
                   >
@@ -21,7 +21,7 @@
             </div>
           </div>
 
-          <div class="panel-body scrollable">
+          <div class="card-body scrollable">
             <div class="row">
               <div class="col-md-12">
                 <div class="div">
@@ -31,7 +31,7 @@
                       :key="index"
                       @click="select(upload, true)"
                       :class="
-                        'list-group-item cursor-pointer bg-info ' +
+                        'list-group-item cursor-pointer ' +
                           (current && current.id == upload.id ? 'active' : '')
                       "
                     >

@@ -20,8 +20,7 @@
                         Outras Edições
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        
                         <span v-for="edition in editions">
                             <a class="dropdown-item" :href="'/editions/'+edition.number">Edição nº@{{ edition.number }} - @{{ edition.month_name }} de @{{ edition.year }}
                             </a>
