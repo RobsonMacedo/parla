@@ -9,18 +9,7 @@
         <meta name="keywords" content="">
         <meta name="author" content="">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <!-- OG TAGS : FACEBOOK E TWITTER -->
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="Carteirada do Bem" />
-        <meta property="og:url" content="https://www.carteiradadobem.com.br/" />
-        <meta property="og:image" content="https://www.carteiradadobem.com.br/assets/images/ShareFacebook_1200x630.jpg" />
-        <meta property="og:description" content="A Carteirada do Bem transforma o dia a dia do cidadão fluminense. Com ela, é mais fácil conhecer seus direitos. E o melhor: é mais fácil fazer seus direitos serem reconhecidos. Não importa quem esteja falando, a lei é igual para todos. E agora você usa seu celular para provar e comprovar isso." />
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:title" content="#carteiradadobem"/>
-
-        <title>{{ config('app.name', 'Carteirada do Bem') }}</title>
-
+        
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="icon" href="favicon.ico" />
 
