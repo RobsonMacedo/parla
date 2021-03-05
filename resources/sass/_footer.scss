@@ -18,6 +18,14 @@
 
   .social {
     font-size: 40px;
+
+    @include media-breakpoint-down(xs) {
+      font-size: 26px;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: 32px;
+    }
+
   }
 
   hr{
@@ -65,7 +73,7 @@
   }
 
   .endereco {
-    font-size: 1.0 rem;
+    font-size: 1.0rem;
   }
 
 
