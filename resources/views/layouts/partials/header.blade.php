@@ -4,7 +4,7 @@
             <div>
 
                     <a href="/" title="Home" rel="home" class="site-branding-logo">
-                        <img src="/images/parla_horizontal.svg" alt="Home" class="img-fluid">
+                        <img src="/images/parla-rj-horizontal-v1.svg" alt="Home" class="img-fluid">
                     </a>
 
             </div>

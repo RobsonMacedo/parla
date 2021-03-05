@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row d-flex align-items-center mt-4">
             <div class="footer-01 col-md-4 pl-4 pl-5">
-                <img src="/images/parla_horizontal_fundoescuro.svg">
+                <img src="/images/parla-rj-horizontal-v2.svg">
                 <p class="publication-name">Publicação da Subdiretoria-Geral de Comunicação Social da Assembleia Legislativa do Estado do Rio de Janeiro
                 </p>
             </div>
