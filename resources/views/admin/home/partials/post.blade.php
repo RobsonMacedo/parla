@@ -1,8 +1,8 @@
 <br>
 
 <div class="col-md-12" v-if="currentArticle">
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             <div class="row">
                 <h4 class="col-md-8">
                     <span v-if="currentArticle.title">@{{ currentArticle.title }}</span>
@@ -11,12 +11,12 @@
 
                 <div class="col-md-4">
                     <div class="text-right">
-                        <button :class="'btn ' + (currentArticle.featured ? 'btn-success' : 'btn-default')" @click="__toggleCurrentFeatured()">
+                        <button :class="'btn ' + (currentArticle.featured ? 'btn-success' : 'btn-primary')" @click="__toggleCurrentFeatured()">
                             <span v-if="!currentArticle.featured">Destacar</span>
                             <span v-if="currentArticle.featured">Destacado</span>
                         </button>
 
-                        <button :class="'btn ' + (currentArticle.published_at ? 'btn-success' : 'btn-default')" @click="__toggleCurrentPublished()">
+                        <button :class="'btn ' + (currentArticle.published_at ? 'btn-success' : 'btn-primary')" @click="__toggleCurrentPublished()">
                             <span v-if="currentArticle.published_at">Publicado</span>
                             <span v-if="! currentArticle.published_at">Publicar</span>
                         </button>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="panel-body add-margin">
+        <div class="card-body add-margin">
             <div class="row">
                 <div class="col-md-12">
                     <form @submit.prevent>

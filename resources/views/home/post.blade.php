@@ -1,26 +1,14 @@
 @extends('layouts.main')
 
 @section('contents')
-    <div class="article-internal">
+    <div class="article-internal mt-5">
         <div class="container">
             <div class="row">
                 <article class="col-md-12">
-{{--                    <div class="article-details">--}}
-                        {{----}}{{----}}{{--<span class="post-category">    CATEGORIA DESABILITADA       --}}{{----}}{{----}}
-                            {{----}}{{----}}{{--{{ $post->category }}--}}{{----}}{{----}}
-                        {{----}}{{----}}{{--</span>--}}{{----}}{{----}}
-                        {{----}}{{----}}{{--<span class="post-divider">--}}{{----}}{{----}}
-                            {{----}}{{----}}{{--/--}}{{----}}{{----}}
-                        {{----}}{{----}}{{--</span>--}}{{----}}{{----}}
-
-                        {{----}}{{----}}{{--<span class="post-created ">{{ $post->date }}</span>--}}{{----}}{{----}}
-                        {{----}}{{----}}{{--<div class="post-author ">{{ $post->authors_string }}</div>--}}{{----}}{{----}}
-                    {{--</div>--}}
-
                     <div class="row">
-                        <figure class="col-xs-12">
+                        <figure class="col-12">
                             @if ($post->main_photo->count() > 0)
-                                <img class="img img-responsive article-img" src="{{ $post->main_photo->url_lowres }}" >
+                                <img class="img img-fluid article-img" src="{{ $post->main_photo->url_lowres }}" >
 
                                 <figcaption class="article-image-caption">
                                     <span class="article-image-author">{{ $post->main_photo->notes_and_author ?: $post->main_photo->author_credits }}</span>
@@ -40,10 +28,10 @@
 
                         <div class="row article-gallery" > {{-- ACR - transoformar este style em css!!!! --}}
                             @foreach ($post->other_photos as $photo)
-                                <figure class="col-xs-6 col-md-3">
+                                <figure class="col-6 col-md-3">
                                     <a href="{{ $photo['url_lowres'] }}" data-lightbox="post-{{ $photo['id'] }}" data-title="{{ $photo['notes_and_author'] }}">
                                         <img
-                                            class="img img-responsive article-img"
+                                            class="img img-fluid article-img"
                                             src="{{ $photo['url_lowres'] }}"
                                         >
                                     </a>
@@ -54,76 +42,8 @@
                             @endforeach
                         </div>
 
-                        {{--<footer class="article-tags">--}}
-                            {{--@foreach ($post->tags as $tag)--}}
-                                {{--<span class="label label-default article-tag">{{ $tag }}</span>--}}
-                            {{--@endforeach--}}
-                        {{--</footer>--}}
                     </div>
                 </article>
-
-                {{--<div class="col-md-4 article-side-list">--}}
-                    {{--<article class="">--}}
-                        {{--<div class="row">--}}
-                            {{--<figure class="col-xs-5">--}}
-                                {{--<a href=""><img class="img img-responsive article-img" src="https://picsum.photos/1500/1000/" ></a>--}}
-                            {{--</figure>--}}
-                            {{--<div class="col-xs-7">--}}
-                                {{--<h4 class="article-title"><a href="/post">Your article title goes here</a></h4>--}}
-                                {{--<div class="article-intro" >--}}
-                                    {{--<p>--}}
-                                        {{--Phasellus et nisl quis erat imperdiet pulvinar. Vestibulum aliquam arcu nec laoreet aliquam. Pellentesque cursus porta dignissim.--}}
-                                    {{--</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</article>--}}
-                    {{--<article class="">--}}
-                        {{--<div class="row">--}}
-                            {{--<figure class="col-xs-5">--}}
-                                {{--<a href=""><img class="img img-responsive article-img" src="https://picsum.photos/1500/1000/?image=1" ></a>--}}
-                            {{--</figure>--}}
-                            {{--<div class="col-xs-7">--}}
-                                {{--<h4 class="article-title"><a href="/post">Your article title goes here</a></h4>--}}
-                                {{--<div class="article-intro" >--}}
-                                    {{--<p>--}}
-                                        {{--Phasellus et nisl quis erat imperdiet pulvinar. Vestibulum aliquam arcu nec laoreet aliquam. Pellentesque cursus porta dignissim.--}}
-                                    {{--</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</article>--}}
-                    {{--<article class="">--}}
-                        {{--<div class="row">--}}
-                            {{--<figure class="col-xs-5">--}}
-                                {{--<a href=""><img class="img img-responsive article-img" src="https://picsum.photos/1500/1000/?image=100" ></a>--}}
-                            {{--</figure>--}}
-                            {{--<div class="col-xs-7">--}}
-                                {{--<h4 class="article-title"><a href="/post">Your article title goes here</a></h4>--}}
-                                {{--<div class="article-intro" >--}}
-                                    {{--<p>--}}
-                                        {{--Phasellus et nisl quis erat imperdiet pulvinar. Vestibulum aliquam arcu nec laoreet aliquam. Pellentesque cursus porta dignissim.--}}
-                                    {{--</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</article>--}}
-                    {{--<article class="">--}}
-                        {{--<div class="row">--}}
-                            {{--<figure class="col-xs-5">--}}
-                                {{--<a href=""><img class="img img-responsive article-img" src="https://picsum.photos/1500/1000/?image=111" ></a>--}}
-                            {{--</figure>--}}
-                            {{--<div class="col-xs-7">--}}
-                                {{--<h4 class="article-title"><a href="/post">Your article title goes here</a></h4>--}}
-                                {{--<div class="article-intro" >--}}
-                                    {{--<p>--}}
-                                        {{--Phasellus et nisl quis erat imperdiet pulvinar. Vestibulum aliquam arcu nec laoreet aliquam. Pellentesque cursus porta dignissim.--}}
-                                    {{--</p>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</article>--}}
-                {{--</div>--}}
             </div>
 
             @include('home.read-also')

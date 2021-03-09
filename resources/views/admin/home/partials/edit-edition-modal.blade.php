@@ -7,10 +7,10 @@
         <div class="modal-body">
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Parla número</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.number"
@@ -23,10 +23,10 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Ano</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.year"
@@ -39,10 +39,10 @@
 
             <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-6 text-right">
+                    <div class="col-6 text-right">
                         <label>Mês</label>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-6">
                         <input
                             type="text"
                             :value="newEdition.month"
@@ -56,9 +56,9 @@
 
         <div class="modal-footer">
             @if ($mode == 'create')
-                <button type="button" class="btn btn-default" data-dismiss="modal" @click="__createNewEdition()">Criar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="__createNewEdition()">Criar</button>
             @else
-                <button type="button" class="btn btn-default" data-dismiss="modal" @click="__updateNewEdition()">Gravar</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" @click="__updateNewEdition()">Gravar</button>
             @endif
 
             <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>

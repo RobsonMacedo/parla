@@ -5,8 +5,13 @@
 .navbar-default {
   background-color: #96a53b;
   border: none;
+  padding-top: 0;
+  padding-bottom: 0;
 
   .navbar-nav {
+
+    font-family: Open Sans;
+
     li {
       a {
         color: #ffffff;
@@ -14,6 +19,41 @@
           color: #e8ebd3;
         }
       }
+
+      &.dropdown {
+
+        &:focus {
+          background-color: #aab661
+        }
+        &:hover {
+          background-color: #aab661
+        }
+        &:active {
+          background-color: #aab661;
+        }
+      }
+
+      .nav-link {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .dropdown-item {
+        &:hover {
+          color: #ffffff;
+          text-decoration: none;
+          background-color: #5a612d;
+        }
+        &:focus {
+          color: #ffffff;
+          text-decoration: none;
+          background-color: #5a612d;
+        }
+      }
+
+
+
+
     }
 
     .active {
@@ -50,6 +90,21 @@
       background-color: #aab661;
       border: 4px solid #96a53b;
       border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      margin-top: 0px;
+      padding-top: 0;
+      padding-bottom: 0;
+
+      a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: solid 1px #96a53b;
+        &:last-child {
+          border-bottom: solid 0px;
+        }
+
+      }
 
       .divider {
         background: #96a53b;
@@ -72,41 +127,44 @@
       }
     }
 
-
-    .nav-search {
-      color: #ffffff;
-      width: 300px;
-      border: 2px solid #697329;
-      border-right: none;
-      background-color: #849134;
-
-      &::-webkit-input-placeholder { /* WebKit browsers */
-        color: #dfe2d1;
-      }
-      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color: #dfe2d1;
-      }
-      &::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color: #dfe2d1;
-      }
-      &:-ms-input-placeholder { /* Internet Explorer 10+ */
-        color: #dfe2d1;
-      }
-
-    }
-
-    button.btn.btn-default {
+    button.btn.btn-primary {
       color: #ffffff;
       background-color: #5a6323;
       border: 1px solid #697329;
       border-left: none;
     }
-
-
-
-
-
   }
+
+  .nav-search {
+    color: #ffffff;
+    width: 300px;
+    border: 2px solid #697329;
+    border-right: none;
+    background-color: #849134 !important;
+    margin-right: 0 !important;
+    &::-webkit-input-placeholder { /* WebKit browsers */
+      color: #dfe2d1;
+    }
+    &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: #dfe2d1;
+    }
+    &::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: #dfe2d1;
+    }
+    &:-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: #dfe2d1;
+    }
+  }
+
+  .input-group-text {
+    background: #697329;
+    border: #697329;
+    color: #fff;
+    &:hover{
+      background: #4f561f;
+    }
+  }
+
 }
 
 

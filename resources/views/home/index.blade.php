@@ -10,9 +10,9 @@
                         <div v-for="post in filteredFeaturedPosts" class="swiper-slide">
                             <article>
                                 <div class="row">
-                                    <figure class="col-xs-12 col-md-8">
+                                    <figure class="col-12 col-md-8">
                                         <a :href="post.link">
-                                            <img class="img img-responsive article-img" :src="post.main_photo.url_lowres">
+                                            <img class="img img-fluid article-img" :src="post.main_photo.url_lowres">
                                         </a>
                                         {{--<figcaption class="article-image-caption">--}}
                                             {{--<div v-if="post.main_photo.author_credits">--}}
@@ -20,7 +20,7 @@
                                             {{--</div>--}}
                                         {{--</figcaption>--}}
                                     </figure>
-                                    <div class="col-xs-12 col-md-4">
+                                    <div class="col-12 col-md-4">
                                         <h3 class="article-title"><a :href="post.link">@{{ post.title }}</a></h3>
                                         {{--<span class="post-category"> @{{ post.category }}</span>   CATEGORIA DESABILITADA        --}}
                                         {{--<span class="post-divider">/</span> --}}
@@ -59,9 +59,9 @@
                 {{--<article v-for="post in (filteredNonFeaturedPosts ? slice(filteredNonFeaturedPosts, (i - 1) * edition.columns, i * edition.columns) : [])" :class="'equal col-md-'+edition.column_size">--}}
                 <article v-for="post in filteredNonFeaturedPosts" :class="'equal col-md-'+edition.column_size">
                     <div class="row">
-                        <figure class="col-xs-12">
+                        <figure class="col-12">
                             <a :href="post.link">
-                                <img class="img img-responsive article-img" :src="post.main_photo.url_lowres">
+                                <img class="img img-fluid article-img" :src="post.main_photo.url_lowres">
                             </a>
                            {{--<figcaption class="article-image-caption">--}}
                                 {{--<div v-if="post.main_photo.author_credits">--}}
@@ -100,10 +100,10 @@
             <h1>Resultado da procura</h1>
 
             <div class="articles-row">
-                <article v-for="post in allFiltered" class="col-xs-12 col-md-10 col-md-offset-1 article-search-item">
-                    <figure class="col-xs-12 col-md-4 ">
+                <article v-for="post in allFiltered" class="col-12 col-md-10 col-md-offset-1 article-search-item">
+                    <figure class="col-12 col-md-4 ">
                         <a :href="post.link">
-                            <img class="img img-responsive article-img" :src="post.main_photo.url_lowres">
+                            <img class="img img-fluid article-img" :src="post.main_photo.url_lowres">
                         </a>
                         {{--<figcaption class="article-image-caption">--}}
                         {{--<div v-if="post.main_photo.author_credits">--}}

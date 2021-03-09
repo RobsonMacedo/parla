@@ -2,15 +2,15 @@
   <div>
     <div class="row">
       <div class="col-md-3">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card">
+          <div class="card-header">
             <div class="row">
               <div class="col-md-12">
                 <div class="btn-toolbar">
                   {{ getDataLength() }} uploads
 
                   <div
-                    class="btn btn-danger btn-sm pull-right"
+                    class="btn btn-danger btn-sm ml-auto"
                     data-toggle="modal"
                     data-target="#upload-modal"
                   >
@@ -21,7 +21,7 @@
             </div>
           </div>
 
-          <div class="panel-body scrollable">
+          <div class="scrollable">
             <div class="row">
               <div class="col-md-12">
                 <div class="div">
@@ -31,21 +31,21 @@
                       :key="index"
                       @click="select(upload, true)"
                       :class="
-                        'list-group-item cursor-pointer bg-info ' +
+                        'list-group-item cursor-pointer ' +
                           (current && current.id == upload.id ? 'active' : '')
                       "
                     >
                       <div class="row">
-                        <div class="col-xs-8">
+                        <div class="col-9">
                           <i class="fa fa-file"></i>
                           {{ upload.original_name }}
                         </div>
 
-                        <div class="col-xs-4 text-right">
+                        <div class="col-3 text-right">
                           <div class="row">
-                            <div class="col-xs-3"></div>
+                            <div class="col-3"></div>
 
-                            <div class="col-xs-9 pull-right">
+                            <div class="col-9 ml-auto">
                               <button
                                 type="button"
                                 class="pull-right btn btn-sm btn-primary"
@@ -69,10 +69,15 @@
                     :click-handler="clickCallback"
                     :prev-text="'<<'"
                     :next-text="'>>'"
-                    :container-class="'pagination'"
-                    :page-class="'page-item'"
+                    :container-class="'pagination pagination-sm justify-content-center mt-4'"
+                    :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'"
+                    :page-link-class="'page-link'" :prev-link-class="'page-link'" :next-link-class="'page-link'"
                   >
                   </paginate>
+
+
+
+
                 </div>
               </div>
             </div>
@@ -81,8 +86,8 @@
       </div>
 
       <div v-if="current" class="col-md-9">
-        <div class="panel panel-default">
-          <div class="panel-heading">
+        <div class="card">
+          <div class="card-header">
             <div class="row">
               <div class="col-md-12">
                 <div class="text-left">
@@ -96,11 +101,11 @@
             </div>
           </div>
 
-          <div class="panel-body scrollable">
+          <div class="card-body scrollable">
             <div class="row">
               <div class="col-md-12">
                 <img
-                  class="preview-panel"
+                  class="preview-panel img-fluid"
                   :src="current.url"
                   alt="Error loading"
                 />
