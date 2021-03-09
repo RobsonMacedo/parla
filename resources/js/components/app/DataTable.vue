@@ -69,15 +69,17 @@
                     :click-handler="clickCallback"
                     :prev-text="'<<'"
                     :next-text="'>>'"
-                    :container-class="'pagination pagination-sm justify-content-center mt-4'"
-                    :page-class="'page-item'" :prev-class="'page-item'" :next-class="'page-item'"
-                    :page-link-class="'page-link'" :prev-link-class="'page-link'" :next-link-class="'page-link'"
+                    :container-class="
+                      'pagination pagination-sm justify-content-center mt-4'
+                    "
+                    :page-class="'page-item'"
+                    :prev-class="'page-item'"
+                    :next-class="'page-item'"
+                    :page-link-class="'page-link'"
+                    :prev-link-class="'page-link'"
+                    :next-link-class="'page-link'"
                   >
                   </paginate>
-
-
-
-
                 </div>
               </div>
             </div>
@@ -106,7 +108,7 @@
               <div class="col-md-12">
                 <img
                   class="preview-panel img-fluid"
-                  :src="current.url"
+                  :src="current.sharing_url"
                   alt="Error loading"
                 />
               </div>
