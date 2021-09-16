@@ -23,9 +23,11 @@
             <div class="col-12 col-md-8 offset-md-2 offset-lg-0 col-lg-8 text-white">
                 <div class="row mt-4">
                     <div class="col-lg-6 endereco">
-                        <p>Rua Primeiro de março, s/n<br>
-                            Praça XV - Rio de Janeiro<br>
-                            <span>CEP</span> 20010-090 &nbsp;&nbsp; <span class="telefone">+55 (21) 2588-1000</span>
+                        <p>Rua da Ajuda, 5 <br>
+                            Centro, Rio de Janeiro - RJ <br>
+
+                            <span>CEP</span> 20.040-000<br>
+                            <span class="telefone">+55 (21) 2588-1000</span>
                         </p>
                     </div>
                     <div class="col-lg-6 text-white">
